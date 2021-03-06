@@ -6,4 +6,15 @@
     <SolidColorBrush x:Key="DialogContentForegroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="DialogBorderColor" Color="Cyan" />
     <SolidColorBrush x:Key="WarningColor" Color="Yellow"/>
+
+
+    <BitmapImage x:Key="Logo" UriSource="/Assets/Dark/imageres_1001.ico"/>
+    <BitmapImage x:Key="ImgQuestion" UriSource="/Assets/Dark/imageres_99.ico"/>
+
+    <Style TargetType="TextBlock" x:Key="AppHeaderStyle">
+        <Setter Property="FontFamily" Value="Segoe UI Light"/>
+        <Setter Property="Foreground" Value="Cyan"/>
+        <Setter Property="FontSize" Value="28"/>
+    </Style>
+    
 </ResourceDictionary>

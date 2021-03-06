@@ -23,7 +23,7 @@ namespace RFM.ViewModels
         private void DoShowDialog()
         {
             DialogService ds = new DialogService();
-            ConfirmDialogViewModel confirmDialogViewModel = new ConfirmDialogViewModel("Test", "Do you want to test ?");
+            ConfirmDialogViewModel confirmDialogViewModel = new ConfirmDialogViewModel("Test", "Do you want to test ?", cancelText: "Cancel");
             ds.ShowDialog(confirmDialogViewModel);
         }
     }
