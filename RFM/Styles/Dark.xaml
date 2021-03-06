@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="DialogModalWindowBackgroundColor" Color="Black" />
+    <SolidColorBrush x:Key="DialogHeaderBackgroundColor" Color="Black" />
+    <SolidColorBrush x:Key="DialogHeaderForegroundColor" Color="White" />
+    <SolidColorBrush x:Key="DialogContentBackgroundColor" Color="#FF252526" />
+    <SolidColorBrush x:Key="DialogContentForegroundColor" Color="DarkGray" />
+    <SolidColorBrush x:Key="DialogBorderColor" Color="Cyan" />
+    <SolidColorBrush x:Key="WarningColor" Color="Yellow"/>
+</ResourceDictionary>

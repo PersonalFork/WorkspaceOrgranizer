@@ -1,0 +1,33 @@
+﻿<Window
+    x:Class="RFM.Dialogs.Base.Dialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    AllowsTransparency="True"
+    ShowInTaskbar="False"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    FontSize="20"
+    FontFamily="Segoe UI Light"
+    WindowState="Maximized"
+    WindowStyle="None">
+    <Window.Resources>
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0.1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource FadeIn}" />
+        </EventTrigger>
+    </Window.Triggers>
+    <Window.Background>
+        <SolidColorBrush Color="Black" Opacity="0.8" />
+    </Window.Background>
+    <ContentControl x:Name="Content" Content="{Binding}" />
+</Window>
