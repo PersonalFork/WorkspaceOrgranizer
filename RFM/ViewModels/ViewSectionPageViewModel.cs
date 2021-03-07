@@ -101,6 +101,7 @@ namespace RFM.ViewModels
 
         protected override void Deactivate()
         {
+            UnselectItem(SelectedItem);
         }
     }
 }
