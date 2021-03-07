@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+
 using RFM.Common.Constants;
 
 namespace RFM.Models
@@ -10,6 +12,7 @@ namespace RFM.Models
         public ExecutableItemType() : base(ItemTypeConstants.Executable)
         {
             Description = "Executable files e.g. .exe, .cmd, .msi, .bat etc.";
+            this.Filter = ConfigurationManager.AppSettings["executableFilter"];
         }
 
         #endregion

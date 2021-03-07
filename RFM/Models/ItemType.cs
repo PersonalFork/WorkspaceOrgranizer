@@ -24,6 +24,14 @@ namespace RFM.Models
             get => _isSelected;
             set => SetProperty(ref _isSelected, value);
         }
+
+        private string _filter;
+        public string Filter
+        {
+            get { return _filter; }
+            set { SetProperty(ref _filter, value); }
+        }
+
         public abstract void Run(Item application, params string[] args);
         public abstract void RunAsAdmin(Item application, params string[] args);
         public abstract void Browse(Item application);

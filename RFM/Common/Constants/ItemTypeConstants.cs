@@ -2,9 +2,9 @@
 {
     public class ItemTypeConstants
     {
-        public const string Hyperlink = "HYPERLINK";
-        public const string Executable = "EXECUTABLE";
-        public const string File = "FILE";
-        public const string Directory = "DIRECTORY";
+        public const string Hyperlink = "Hyperlink";
+        public const string Executable = "Executable";
+        public const string File = "File";
+        public const string Directory = "Directory";
     }
 }

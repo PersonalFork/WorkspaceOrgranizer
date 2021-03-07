@@ -8,7 +8,7 @@ namespace RFM.Models
     {
         public FileItemType() : base(ItemTypeConstants.File)
         {
-            Description = "Any file e.g. text,PDF,image file etc.";
+            Description = "Any file e.g. text, PDF, image file etc.";
         }
 
         public override void Browse(Item application)

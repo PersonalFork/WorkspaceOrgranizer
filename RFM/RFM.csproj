@@ -42,6 +42,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -60,7 +62,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\SelectFileBehavior.cs" />
     <Compile Include="Common\Constants\ItemTypeConstants.cs" />
+    <Compile Include="Converters\FileToImageIconConverter.cs" />
+    <Compile Include="Converters\ItemTypeToBooleanConverter.cs" />
+    <Compile Include="Converters\MockConverter.cs" />
     <Compile Include="Dialogs\ItemTypeDialogViewModel.cs" />
     <Compile Include="Dialogs\ItemType\ItemTypeDialog.xaml.cs">
       <DependentUpon>ItemTypeDialog.xaml</DependentUpon>
@@ -204,6 +210,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -241,7 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Light\" />
-    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

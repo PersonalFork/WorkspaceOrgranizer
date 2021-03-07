@@ -3,6 +3,7 @@ using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
+using RFM.Common.Extensions;
 using RFM.Dialogs;
 using RFM.Models;
 
@@ -10,6 +11,41 @@ namespace RFM.ViewModels
 {
     public class AddApplicationPageViewModel : ViewModelBase
     {
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        private string _location;
+        public string Location
+        {
+            get => _location;
+            set => SetProperty(ref _location, value);
+        }
+
+        private string _commandLineArguments;
+        public string CommandLineArguments
+        {
+            get => _commandLineArguments;
+            set => SetProperty(ref _commandLineArguments, value);
+        }
+
+        private ItemType _itemType;
+        public ItemType ItemType
+        {
+            get => _itemType;
+            set => SetProperty(ref _itemType, value);
+        }
+
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand AddApplicationCommand { get; private set; }
 
@@ -19,15 +55,16 @@ namespace RFM.ViewModels
             AddApplicationCommand = new DelegateCommand(DoAddApplication, CanAddApplication);
         }
 
-        private static int itemId = 1;
         private void DoAddApplication()
         {
-            // TODO: Show an application type dialog.
             Item item = new Item
             {
-                Name = $"Item {itemId}"
+                Name = Name,
+                ItemType = ItemType,
+                Location = Location,
+                Description = Description,
+                StartupArgs = CommandLineArguments
             };
-            itemId++;
             Workflow.SelectedSection.Items.Add(item);
             Browse(Pages.ViewSection);
         }
@@ -42,12 +79,27 @@ namespace RFM.ViewModels
             Browse(Pages.ViewSection);
         }
 
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            NavigationParameters parameters = navigationContext?.Parameters;
+            if (parameters != null && parameters.TryGetData<ItemType>(out ItemType itemType))
+            {
+                ItemType = itemType;
+            }
+            base.OnNavigatedTo(navigationContext);
+        }
+
         protected override void Activate()
         {
         }
 
         protected override void Deactivate()
         {
+            Name = null;
+            Description = null;
+            CommandLineArguments = null;
+            Location = null;
+            ItemType = null;
         }
     }
 }

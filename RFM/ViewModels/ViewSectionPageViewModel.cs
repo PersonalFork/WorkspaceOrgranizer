@@ -1,8 +1,13 @@
-﻿using Prism.Commands;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+
+using Prism.Commands;
 using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
+using RFM.Common.Extensions;
 using RFM.Dialogs;
 using RFM.Models;
 
@@ -13,8 +18,10 @@ namespace RFM.ViewModels
         public DelegateCommand AddApplicationCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand DeleteSectionCommand { get; private set; }
+        public DelegateCommand OpenInExplorerCommand { get; private set; }
         public DelegateCommand EditSectionCommand { get; private set; }
         public DelegateCommand<Item> SelectItemCommand { get; private set; }
+        public DelegateCommand DeleteItemCommand { get; private set; }
 
         private Item _selectedApplication;
         public Item SelectedItem
@@ -30,6 +37,43 @@ namespace RFM.ViewModels
             EditSectionCommand = new DelegateCommand(DoEditSection);
             AddApplicationCommand = new DelegateCommand(DoAddApplication);
             SelectItemCommand = new DelegateCommand<Item>(DoSelectItem);
+            OpenInExplorerCommand = new DelegateCommand(DoBrowse);
+            DeleteItemCommand = new DelegateCommand(DoDeleteItem);
+        }
+
+        private void DoDeleteItem()
+        {
+            string title = "Confirm Delete";
+            string question = $"Do you want to delete the item `{SelectedItem.Name}` ?";
+            string yesText = "Yes";
+            string noText = "No";
+            ConfirmDialogViewModel dialog = new ConfirmDialogViewModel(title, question, yesText, noText);
+            bool? dialogResult = DialogService.ShowDialog(dialog);
+            if (dialogResult == true)
+            {
+                Workflow.SelectedSection.Items.Remove(SelectedItem);
+                SelectedItem = null;
+            }
+        }
+
+        private void DoBrowse()
+        {
+            if (SelectedItem == null || string.IsNullOrEmpty(SelectedItem.Location))
+            {
+                return;
+            }
+            string path = Path.GetDirectoryName(SelectedItem.Location);
+            if (Directory.Exists(path))
+            {
+                try
+                {
+                    Process.Start("explorer.exe", path);
+                }
+                catch (Exception)
+                {
+                    //_logger.Warn("Could not open directory :" + ex.Message);
+                }
+            }
         }
 
         private void DoSelectItem(Item item)
@@ -67,12 +111,12 @@ namespace RFM.ViewModels
         private void DoAddApplication()
         {
             ItemTypeDialogViewModel vm = new ItemTypeDialogViewModel();
-            ItemType selectedApp = DialogService.ShowDialog(vm);
-            if (selectedApp == null)
+            ItemType selectedItemType = DialogService.ShowDialog(vm);
+            if (selectedItemType == null)
             {
                 return;
             }
-            Browse(Pages.AddApplication);
+            Browse(Pages.AddApplication, selectedItemType.ToNavigationParameter());
         }
 
         private void DoEditSection()

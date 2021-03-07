@@ -34,7 +34,7 @@ namespace RFM.ViewModels
 
         private void DoGoBack()
         {
-            Browse(Pages.Dashboard);
+            Browse(Pages.ViewSection);
         }
 
         protected override void Activate()

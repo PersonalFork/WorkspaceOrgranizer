@@ -27,7 +27,7 @@
         </EventTrigger>
     </Window.Triggers>
     <Window.Background>
-        <SolidColorBrush Color="Black" Opacity="0.8" />
+        <SolidColorBrush Color="Black" Opacity="0.9" />
     </Window.Background>
     <ContentControl x:Name="Content" Content="{Binding}" />
 </Window>

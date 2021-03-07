@@ -4,11 +4,18 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:constants="clr-namespace:RFM.Common.Constants"
+    xmlns:behaviors="clr-namespace:RFM.Behaviors"
+    xmlns:converters="clr-namespace:RFM.Converters"
     mc:Ignorable="d"
     prism:ViewModelLocator.AutoWireViewModel="True"
     d:DesignHeight="450"
     d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:ItemTypeToBooleanConverter x:Key="ItemTypeToBooleanConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -16,18 +23,190 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Style="{DynamicResource SubHeaderStyle}" Text="Add Application" />
+        <TextBlock Style="{DynamicResource SubHeaderStyle}">
+            <Run Text="Add" />
+            <Run Text="{Binding ItemType.Type}" />
+        </TextBlock>
+
+        <Grid Grid.Row="1" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Name" />
+                    <TextBlock Text="*" Foreground="Red" />
+                    <TextBlock Text=" :" />
+                </StackPanel>
+
+                <TextBox
+                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Grid.Column="1"
+                    Margin="5" />
+
+                <StackPanel
+                    Grid.Row="1"
+                    Orientation="Horizontal"
+                    Margin="5">
+                    <TextBlock Text="Description" />
+                    <TextBlock Text="*" Foreground="Red" />
+                    <TextBlock Text=" :" Margin="0" />
+                </StackPanel>
+
+                <TextBox
+                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="5" />
+
+                <TextBlock
+                    Visibility="Collapsed"
+                    Grid.Row="2"
+                    Text="Item Type : "
+                    Margin="5" />
+
+                <TextBox
+                    Visibility="Collapsed"
+                    IsReadOnly="True"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding ItemType.Type}"
+                    Margin="5" />
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Row="3"
+                    Margin="5"
+                    Visibility="{Binding ElementName=tbLocation, Path=Visibility}">
+                    <TextBlock
+                        x:Name="tbLocation"
+                        Grid.Row="3"
+                        Text="Location">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Hyperlink}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Text="*" Foreground="Red" />
+                    <TextBlock Text=" :" />
+                </StackPanel>
+
+                <TextBlock
+                    Grid.Row="3"
+                    Text="Hyperlink : "
+                    Margin="5">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Hyperlink}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding Location}" Margin="5" />
+
+                    <Button
+                        Grid.Column="1"
+                        Content="Browse"
+                        Visibility="{Binding ElementName=tbLocation, Path=Visibility}"
+                        Width="auto"
+                        Margin="5">
+                        <i:Interaction.Behaviors>
+                            <behaviors:SelectFileBehavior
+                                Filter="{Binding ItemType.Filter}"
+                                IsDirectory="{Binding ItemType.Type, Converter={StaticResource ItemTypeToBooleanConverter}, ConverterParameter={x:Static constants:ItemTypeConstants.Directory}}"
+                                SelectedPath="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </i:Interaction.Behaviors>
+                    </Button>
+                </Grid>
+
+
+                <Grid
+                    x:Name="grdIsExecutable"
+                    Height="0"
+                    Width="0"
+                    IsHitTestVisible="False">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Executable}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                </Grid>
+
+                <TextBlock
+                    Visibility="{Binding ElementName=grdIsExecutable, Path=Visibility}"
+                    Grid.Row="4"
+                    Text="Arguments : "
+                    Margin="5" />
+                <TextBox
+                    Visibility="{Binding ElementName=grdIsExecutable, Path=Visibility}"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{Binding CommandLineArguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Margin="5" />
+                <Button
+                    Grid.Column="1"
+                    VerticalAlignment="Bottom"
+                    Grid.Row="8"
+                    Content="Create"
+                    Command="{Binding AddApplicationCommand}"
+                    Width="auto"
+                    HorizontalAlignment="Right" />
+            </Grid>
+            <Border
+                Grid.RowSpan="4"
+                BorderBrush="{DynamicResource DialogBorderColor}"
+                BorderThickness="1,0,0,0"
+                Grid.Column="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch"
+                Margin="5,5,5,0" />
+
+        </Grid>
+
+
         <Grid Grid.Row="2">
             <Button
                 Content="Back"
                 Command="{Binding BackCommand}"
                 Width="auto"
                 HorizontalAlignment="Left" />
-            <Button
-                Content="Create"
-                Command="{Binding AddApplicationCommand}"
-                Width="auto"
-                HorizontalAlignment="Right" />
         </Grid>
     </Grid>
 </UserControl>

@@ -15,6 +15,13 @@ namespace RFM.Models
             set => SetProperty(ref _name, value);
         }
 
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
         private DateTime _createdOn;
         public DateTime CreatedOn
         {
