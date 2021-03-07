@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 using Prism.Mvvm;
 
 namespace RFM.Models
 {
-    public class Section : BindableBase
+    public class Workspace : BindableBase
     {
         private string _id;
         public string Id
@@ -34,10 +35,18 @@ namespace RFM.Models
             private set => SetProperty(ref _createdOn, value);
         }
 
-        public Section()
+        private ObservableCollection<Item> _items;
+        public ObservableCollection<Item> Items
+        {
+            get => _items;
+            set => SetProperty(ref _items, value);
+        }
+
+        public Workspace()
         {
             Id = Guid.NewGuid().ToString();
             CreatedOn = DateTime.Now;
+            Items = new ObservableCollection<Item>();
         }
     }
 }

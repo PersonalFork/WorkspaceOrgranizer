@@ -60,11 +60,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Item.cs" />
     <Compile Include="ViewModels\AddApplicationPageViewModel.cs" />
     <Compile Include="ViewModels\EditSectionPageViewModel.cs" />
     <Compile Include="ViewModels\ViewSectionPageViewModel.cs" />
-    <Compile Include="Views\AddApplication.xaml.cs">
-      <DependentUpon>AddApplication.xaml</DependentUpon>
+    <Compile Include="Views\AddApplicationPage.xaml.cs">
+      <DependentUpon>AddApplicationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditSectionPage.xaml.cs">
       <DependentUpon>EditSectionPage.xaml</DependentUpon>
@@ -96,7 +97,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AddApplication.xaml">
+    <Page Include="Views\AddApplicationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,7 +146,7 @@
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DialogService.cs" />
-    <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\Workspace.cs" />
     <Compile Include="ViewModels\CreateSectionPageViewModel.cs" />
     <Compile Include="ViewModels\DashboardPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

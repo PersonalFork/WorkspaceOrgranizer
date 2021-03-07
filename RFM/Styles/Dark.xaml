@@ -5,17 +5,26 @@
     <SolidColorBrush x:Key="DialogContentBackgroundColor" Color="#FF252526" />
     <SolidColorBrush x:Key="DialogContentForegroundColor" Color="DarkGray" />
     <SolidColorBrush x:Key="DialogBorderColor" Color="Cyan" />
-    <SolidColorBrush x:Key="WarningColor" Color="Yellow"/>
+    <SolidColorBrush x:Key="WarningColor" Color="Yellow" />
+    <SolidColorBrush x:Key="AppHeaderForegroundColor" Color="#13C9C9" />
+    <SolidColorBrush x:Key="AppSubHeaderForegroundColor" Color="#13C9C9" />
 
-
-    <BitmapImage x:Key="Logo" UriSource="/Assets/Dark/imageres_1001.ico"/>
-    <BitmapImage x:Key="ImgQuestion" UriSource="/Assets/Dark/imageres_99.ico"/>
+    <BitmapImage x:Key="Logo" UriSource="/Assets/Dark/imageres_1001.ico" />
+    <BitmapImage x:Key="ImgQuestion" UriSource="/Assets/Dark/imageres_99.ico" />
 
     <Style TargetType="TextBlock" x:Key="AppHeaderStyle">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="Foreground" Value="Cyan"/>
-        <Setter Property="FontSize" Value="28"/>
-        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="{DynamicResource AppHeaderForegroundColor}" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="FontWeight" Value="Normal" />
     </Style>
-    
+
+    <Style TargetType="TextBlock" x:Key="SubHeaderStyle">
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="{DynamicResource AppSubHeaderForegroundColor}" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+
 </ResourceDictionary>

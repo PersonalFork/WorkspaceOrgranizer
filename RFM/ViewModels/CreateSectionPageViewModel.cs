@@ -26,7 +26,7 @@ namespace RFM.ViewModels
 
         private void DoCreateSection()
         {
-            Section newSection = new Section
+            Workspace newSection = new Workspace
             {
                 Name = "Insights",
                 Description = "The section for insights projects"

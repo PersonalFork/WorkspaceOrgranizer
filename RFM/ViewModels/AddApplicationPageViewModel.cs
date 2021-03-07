@@ -4,6 +4,7 @@ using Prism.Regions;
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Dialogs;
+using RFM.Models;
 
 namespace RFM.ViewModels
 {
@@ -18,9 +19,17 @@ namespace RFM.ViewModels
             AddApplicationCommand = new DelegateCommand(DoAddApplication, CanAddApplication);
         }
 
+        private static int itemId = 1;
         private void DoAddApplication()
         {
-
+            // TODO: Show an application type dialog.
+            Item item = new Item
+            {
+                Name = $"Item {itemId}"
+            };
+            itemId++;
+            Workflow.SelectedSection.Items.Add(item);
+            Browse(Pages.ViewSection);
         }
 
         private bool CanAddApplication()

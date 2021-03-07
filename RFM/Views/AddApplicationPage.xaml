@@ -16,7 +16,7 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Add Application" />
+        <TextBlock Style="{DynamicResource SubHeaderStyle}" Text="Add Application" />
         <Grid Grid.Row="2">
             <Button
                 Content="Back"
@@ -29,6 +29,5 @@
                 Width="auto"
                 HorizontalAlignment="Right" />
         </Grid>
-
     </Grid>
 </UserControl>

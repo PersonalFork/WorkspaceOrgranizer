@@ -8,15 +8,15 @@ namespace RFM.Common
 {
     public class Workflow : BindableBase, IWorkflow
     {
-        private ObservableCollection<Section> _sections;
-        public ObservableCollection<Section> Sections
+        private ObservableCollection<Workspace> _sections;
+        public ObservableCollection<Workspace> Sections
         {
             get => _sections;
             set => SetProperty(ref _sections, value);
         }
 
-        private Section _selectedSection;
-        public Section SelectedSection
+        private Workspace _selectedSection;
+        public Workspace SelectedSection
         {
             get => _selectedSection;
             set => SetProperty(ref _selectedSection, value);
@@ -24,7 +24,7 @@ namespace RFM.Common
 
         public Workflow()
         {
-            Sections = new ObservableCollection<Section>();
+            Sections = new ObservableCollection<Workspace>();
         }
     }
 }

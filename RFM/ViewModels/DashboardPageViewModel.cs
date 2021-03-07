@@ -21,7 +21,7 @@ namespace RFM.ViewModels
 
         private void DoViewSection(object obj)
         {
-            if (!(obj is Section section))
+            if (!(obj is Workspace section))
             {
                 return;
             }

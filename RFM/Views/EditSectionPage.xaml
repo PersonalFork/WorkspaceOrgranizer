@@ -15,7 +15,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Edit Section" />
+        <TextBlock Style="{DynamicResource SubHeaderStyle}" Text="Edit Section" />
         <Grid Grid.Row="2">
             <Button
                 Content="Back"

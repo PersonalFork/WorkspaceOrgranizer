@@ -15,7 +15,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Create Section" VerticalAlignment="Center" />
+        <TextBlock Style="{DynamicResource SubHeaderStyle}" Text="Create Section" VerticalAlignment="Center" />
         <Grid Grid.Row="2">
             <Button
                 Content="Back"

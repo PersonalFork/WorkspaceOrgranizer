@@ -6,7 +6,7 @@ namespace RFM.Common
 {
     public interface IWorkflow
     {
-        ObservableCollection<Section> Sections { get; }
-        Section SelectedSection { get; set; }
+        ObservableCollection<Workspace> Sections { get; }
+        Workspace SelectedSection { get; set; }
     }
 }

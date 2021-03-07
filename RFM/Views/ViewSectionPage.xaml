@@ -17,7 +17,14 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <TextBlock Text="View Section" VerticalAlignment="Center" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Style="{DynamicResource SubHeaderStyle}"
+                Text="Workspace Details"
+                VerticalAlignment="Center" />
             <StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Right"
@@ -38,7 +45,131 @@
                     Command="{Binding AddApplicationCommand}"
                     Width="auto" />
             </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+            </Grid>
         </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Style="{DynamicResource SubHeaderStyle}" Text="Application List" />
+            <Grid Grid.Row="1">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Grid.ColumnSpan" Value="1" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                <Setter Property="Grid.ColumnSpan" Value="2" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <ScrollViewer Margin="0,0,15,0">
+                    <ItemsControl x:Name="itemsControlSections" ItemsSource="{Binding Workflow.SelectedSection.Items}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button CommandParameter="{Binding .}" Command="{Binding ElementName=itemsControlSections, Path=DataContext.SelectItemCommand}">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Border Margin="0,5,10.3,5" BorderThickness="1">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="BorderBrush" Value="Transparent" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource DialogBorderColor}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <Grid
+                                                    Cursor="Hand"
+                                                    Width="300"
+                                                    Height="150"
+                                                    Background="Red" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  Application Details.  -->
+            <Grid Grid.Column="1" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Border
+                    Grid.RowSpan="3"
+                    Grid.Column="1"
+                    Margin="-10,0,0,0"
+                    BorderThickness="1,0,0,0"
+                    BorderBrush="{DynamicResource DialogBorderColor}"
+                    HorizontalAlignment="Left" />
+                <TextBlock
+                    Style="{DynamicResource SubHeaderStyle}"
+                    Text="Application Details"
+                    Margin="5,0" />
+                <Grid Grid.Row="1" Margin="10,10,5,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding SelectedItem.Name}" Foreground="Red" />
+                    <StackPanel
+                        Grid.Row="1"
+                        Orientation="Vertical"
+                        HorizontalAlignment="Left">
+                        <TextBlock
+                            Style="{DynamicResource SubHeaderStyle}"
+                            Text="Application Options"
+                            Margin="0,5" />
+                        <Button Content="Edit Application" Margin="5" />
+                        <Button Content="Open" Margin="5" />
+                        <Button Content="Run" Margin="5" />
+                        <Button Content="Run as Admin" Margin="5" />
+                        <Button Content="Open In Explorer" Margin="5" />
+                        <Button Content="Delete" Margin="5" />
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+        </Grid>
+
         <Grid Grid.Row="2">
             <Button
                 Content="Back"
