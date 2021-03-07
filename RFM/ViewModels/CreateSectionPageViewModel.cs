@@ -10,13 +10,29 @@ namespace RFM.ViewModels
 {
     public class CreateSectionPageViewModel : ViewModelBase
     {
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => SetProperty(ref _name, value);
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand CreateSectionCommand { get; private set; }
 
         public CreateSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService) : base(workflow, regionManager, dialogService)
         {
             BackCommand = new DelegateCommand(DoGoBack);
-            CreateSectionCommand = new DelegateCommand(DoCreateSection, CanCreateSection);
+            CreateSectionCommand = new DelegateCommand(DoCreateSection, CanCreateSection)
+                .ObservesProperty(() => Name)
+                .ObservesProperty(() => Description);
         }
 
         private void DoGoBack()
@@ -28,16 +44,17 @@ namespace RFM.ViewModels
         {
             Workspace newSection = new Workspace
             {
-                Name = "Insights",
-                Description = "The section for insights projects"
+                Name = Name,
+                Description = Description
             };
             Workflow.Sections.Add(newSection);
-            Browse(Pages.Dashboard);
+            Workflow.SelectedSection = newSection;
+            Browse(Pages.ViewSection);
         }
 
         private bool CanCreateSection()
         {
-            return true;
+            return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description);
         }
 
         protected override void Activate()
@@ -46,6 +63,8 @@ namespace RFM.ViewModels
 
         protected override void Deactivate()
         {
+            Name = null;
+            Description = null;
         }
     }
 }

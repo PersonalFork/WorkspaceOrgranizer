@@ -66,12 +66,15 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <TextBlock Style="{DynamicResource SubHeaderStyle}" Text="Sections" VerticalAlignment="Center" />
+            <TextBlock
+                Style="{DynamicResource SubHeaderStyle}"
+                Text="Sections"
+                VerticalAlignment="Center" />
             <Button
                 Content="Create Section"
                 Command="{Binding CreateSectionCommand}"
                 HorizontalAlignment="Right"
-                Margin="5 5 0 5" />
+                Margin="5,5,0,5" />
             <ScrollViewer Grid.Row="1">
                 <ItemsControl
                     x:Name="itemsControlSections"
@@ -92,7 +95,12 @@
                                             Margin="0,5,10.3,5"
                                             Width="325"
                                             Height="150"
-                                            Background="Black" />
+                                            Background="Black">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Text="{Binding Name}" />
+                                        </Grid>
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>

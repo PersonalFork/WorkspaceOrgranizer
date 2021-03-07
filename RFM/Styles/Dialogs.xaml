@@ -6,4 +6,8 @@
         <dialogs:ConfirmDialog />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type dialogs:ItemTypeDialogViewModel}">
+        <dialogs:ItemTypeDialog />
+    </DataTemplate>
+
 </ResourceDictionary>

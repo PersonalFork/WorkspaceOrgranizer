@@ -60,7 +60,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Constants\ItemTypeConstants.cs" />
+    <Compile Include="Dialogs\ItemTypeDialogViewModel.cs" />
+    <Compile Include="Dialogs\ItemType\ItemTypeDialog.xaml.cs">
+      <DependentUpon>ItemTypeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DirectoryItemType.cs" />
+    <Compile Include="Models\ExecutableItem.cs" />
+    <Compile Include="Models\FileItemType.cs" />
+    <Compile Include="Models\HyperlinkItemType.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ItemType.cs" />
     <Compile Include="ViewModels\AddApplicationPageViewModel.cs" />
     <Compile Include="ViewModels\EditSectionPageViewModel.cs" />
     <Compile Include="ViewModels\ViewSectionPageViewModel.cs" />
@@ -78,6 +88,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\Confirm\ConfirmDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ItemType\ItemTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,10 +216,27 @@
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Dark\hyperlink_red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Dark\imageres_1001.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Assets\Dark\imageres_99.ico" />
+    <Content Include="Assets\Dark\imageres_99.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Dark\imageres_117.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Dark\imageres_179.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Dark\imageres_4.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Dark\imageres_5323.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Dependencies\FirstFloor.ModernUI.dll" />
   </ItemGroup>
   <ItemGroup>

@@ -58,7 +58,7 @@
                     <TextBlock Text="Name : " Margin="5" />
                     <TextBlock
                         Grid.Column="1"
-                        Text="{Binding Description}"
+                        Text="{Binding Name}"
                         Margin="5" />
                     <TextBlock
                         Grid.Row="1"
@@ -209,6 +209,27 @@
             BorderThickness="1,0,0,0"
             BorderBrush="{DynamicResource DialogBorderColor}"
             HorizontalAlignment="Left" />
+
+        <Border
+            BorderBrush="{DynamicResource WarningColor}"
+            BorderThickness="1"
+            Padding="10"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Workflow.SelectedSection.Items.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock Text="No Applications Available. Click on 'Add Application' to add an application" />
+        </Border>
 
         <Grid Grid.Row="1">
             <Button

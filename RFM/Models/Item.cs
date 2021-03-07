@@ -32,8 +32,8 @@ namespace RFM.Models
         private bool _isSelected;
         public bool IsSelected
         {
-            get { return _isSelected; }
-            set { SetProperty(ref _isSelected, value); }
+            get => _isSelected;
+            set => SetProperty(ref _isSelected, value);
         }
 
         private string _location;
@@ -55,6 +55,13 @@ namespace RFM.Models
         {
             get => _icon;
             set => SetProperty(ref _icon, value);
+        }
+
+        private ItemType _itemType;
+        public ItemType ItemType
+        {
+            get => _itemType;
+            set => SetProperty(ref _itemType, value);
         }
     }
 }

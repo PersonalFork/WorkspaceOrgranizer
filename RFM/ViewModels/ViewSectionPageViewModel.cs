@@ -66,6 +66,12 @@ namespace RFM.ViewModels
 
         private void DoAddApplication()
         {
+            ItemTypeDialogViewModel vm = new ItemTypeDialogViewModel();
+            ItemType selectedApp = DialogService.ShowDialog(vm);
+            if (selectedApp == null)
+            {
+                return;
+            }
             Browse(Pages.AddApplication);
         }
 
@@ -77,7 +83,7 @@ namespace RFM.ViewModels
         private void DoDeleteSection()
         {
             string title = "Confirm Delete";
-            string question = "Do you want to delete the section ?";
+            string question = $"Do you want to delete the section `{Workflow.SelectedSection.Name}` ?";
             string yesText = "Yes";
             string noText = "Cancel";
             ConfirmDialogViewModel dialog = new ConfirmDialogViewModel(title, question, yesText, noText);
