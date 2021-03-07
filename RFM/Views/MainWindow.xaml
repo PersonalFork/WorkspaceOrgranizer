@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+    xmlns:constants="clr-namespace:RFM.Common.Constants"
     WindowState="Maximized"
     FontSize="20"
     FontFamily="Segoe UI Light"
@@ -15,18 +16,19 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Button
+        <ContentControl prism:RegionManager.RegionName="{x:Static constants:Regions.HeaderRegion}" />
+        <Border
+            BorderBrush="{DynamicResource DialogBorderColor}"
+            BorderThickness="0,1,0,0"
+            HorizontalAlignment="Stretch"
             Grid.Row="1"
-            Content="Test"
-            Panel.ZIndex="1"
-            Command="{Binding DialogCommand}"
-            Width="auto"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center" />
-        <ContentControl prism:RegionManager.RegionName="HeaderRegion" />
-        <ScrollViewer Grid.Row="1">
-            <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        </ScrollViewer>
-        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="FooterRegion" />
+            Margin="5"
+            VerticalAlignment="Top"
+            Panel.ZIndex="1" />
+        <ContentControl
+            Grid.Row="1"
+            Margin="5,10"
+            prism:RegionManager.RegionName="{x:Static constants:Regions.ContentRegion}" />
+        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="{x:Static constants:Regions.FooterRegion}" />
     </Grid>
 </mui:ModernWindow>

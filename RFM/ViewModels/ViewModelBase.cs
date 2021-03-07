@@ -1,5 +1,4 @@
-﻿
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -86,7 +85,7 @@ namespace RFM.ViewModels
         #endregion
 
         #region Protected Method Declarations.
-    
+
         protected abstract void Activate();
         protected abstract void Deactivate();
 
@@ -109,6 +108,7 @@ namespace RFM.ViewModels
         protected void GoHome()
         {
             RegionManager?.BrowseRegionToPage(Regions.HeaderRegion, Pages.HomeHeader);
+            RegionManager?.BrowseRegionToPage(Regions.ContentRegion, Pages.Dashboard);
         }
 
         #endregion

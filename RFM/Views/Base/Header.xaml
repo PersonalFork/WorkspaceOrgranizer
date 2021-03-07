@@ -12,15 +12,16 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Image
                 RenderOptions.BitmapScalingMode="HighQuality"
-                Width="100"
-                Height="100"
+                Width="60"
+                Height="60"
                 Margin="10"
                 Source="{DynamicResource Logo}" />
 
             <TextBlock
                 Text="Recent App Manager"
                 VerticalAlignment="Center"
-                Style="{DynamicResource AppHeaderStyle}" />
+                Style="{DynamicResource AppHeaderStyle}" 
+                />
         </StackPanel>
     </Grid>
 </UserControl>
