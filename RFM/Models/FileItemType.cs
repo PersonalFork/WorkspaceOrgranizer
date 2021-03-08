@@ -10,25 +10,5 @@ namespace RFM.Models
         {
             Description = "Any file e.g. text, PDF, image file etc.";
         }
-
-        public override void Browse(Item application)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Open(Item application)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Run(Item application, params string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RunAsAdmin(Item application, params string[] args)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -366,16 +366,21 @@
                             <Button
                                 Content="Open"
                                 Margin="5"
+                                Command="{Binding OpenCommand}"
                                 Visibility="{Binding ElementName=grdIsExecutableHide, Path=Visibility}" />
                             <Button
                                 Content="Run"
                                 Margin="5"
+                                Command="{Binding RunCommand}"
                                 Visibility="{Binding ElementName=grdIsExecutable, Path=Visibility}" />
                             <Button
                                 Content="Run as Admin"
                                 Margin="5"
                                 Visibility="Collapsed" />
-                            <Button Content="Open In Explorer" Margin="5" Command="{Binding OpenInExplorerCommand}">
+                            <Button
+                                Content="Open In Explorer"
+                                Margin="5"
+                                Command="{Binding OpenInExplorerCommand}">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                         <Style.Triggers>
@@ -389,8 +394,14 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button Content="Edit Application" Margin="5" />
-                            <Button Content="Delete" Margin="5" Command="{Binding DeleteItemCommand}"/>
+                            <Button
+                                Content="Edit Application"
+                                Margin="5"
+                                Command="{Binding EditApplicationCommand}" />
+                            <Button
+                                Content="Delete"
+                                Margin="5"
+                                Command="{Binding DeleteItemCommand}" />
                         </WrapPanel>
                     </StackPanel>
 

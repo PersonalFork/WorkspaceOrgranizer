@@ -8,5 +8,6 @@
         public const string ViewSection = "VIEW_SECTION";
         public const string EditSection = "EDIT_SECTION";
         public const string AddApplication = "ADD_APPLICATION";
+        public const string EditApplication = "EDIT_APPLICATION";
     }
 }

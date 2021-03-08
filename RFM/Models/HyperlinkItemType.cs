@@ -1,5 +1,4 @@
-﻿using System;
-using RFM.Common.Constants;
+﻿using RFM.Common.Constants;
 
 namespace RFM.Models
 {
@@ -12,22 +11,15 @@ namespace RFM.Models
 
         public override void Browse(Item application)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(application.Location))
+            {
+                Run(application, null);
+            }
         }
 
         public override void Open(Item application)
         {
-            throw new NotImplementedException();
-        }
-
-        public override void Run(Item application, params string[] args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RunAsAdmin(Item application, params string[] args)
-        {
-            throw new NotImplementedException();
+            Browse(application);
         }
     }
 }

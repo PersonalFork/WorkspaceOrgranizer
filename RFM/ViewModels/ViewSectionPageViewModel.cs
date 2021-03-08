@@ -1,7 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-
+﻿
+using System;
 using Prism.Commands;
 using Prism.Regions;
 
@@ -22,6 +20,9 @@ namespace RFM.ViewModels
         public DelegateCommand EditSectionCommand { get; private set; }
         public DelegateCommand<Item> SelectItemCommand { get; private set; }
         public DelegateCommand DeleteItemCommand { get; private set; }
+        public DelegateCommand<Item> EditApplicationCommand { get; private set; }
+        public DelegateCommand OpenCommand { get; }
+        public DelegateCommand RunCommand { get; }
 
         private Item _selectedApplication;
         public Item SelectedItem
@@ -39,6 +40,24 @@ namespace RFM.ViewModels
             SelectItemCommand = new DelegateCommand<Item>(DoSelectItem);
             OpenInExplorerCommand = new DelegateCommand(DoBrowse);
             DeleteItemCommand = new DelegateCommand(DoDeleteItem);
+            EditApplicationCommand = new DelegateCommand<Item>(DoEditApplication);
+            OpenCommand = new DelegateCommand(DoOpenApplication);
+            RunCommand = new DelegateCommand(DoRunApplication);
+        }
+
+        private void DoOpenApplication()
+        {
+            SelectedItem.Open();
+        }
+
+        private void DoRunApplication()
+        {
+            SelectedItem.ItemType.Run(SelectedItem, SelectedItem.StartupArgs);
+        }
+
+        private void DoEditApplication(Item item)
+        {
+            Browse(Pages.EditApplication, item.ToNavigationParameter());
         }
 
         private void DoDeleteItem()
@@ -62,18 +81,7 @@ namespace RFM.ViewModels
             {
                 return;
             }
-            string path = Path.GetDirectoryName(SelectedItem.Location);
-            if (Directory.Exists(path))
-            {
-                try
-                {
-                    Process.Start("explorer.exe", path);
-                }
-                catch (Exception)
-                {
-                    //_logger.Warn("Could not open directory :" + ex.Message);
-                }
-            }
+            SelectedItem.Browse();
         }
 
         private void DoSelectItem(Item item)

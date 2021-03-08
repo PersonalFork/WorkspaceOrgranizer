@@ -6,6 +6,8 @@ namespace RFM.Models
 {
     public class Item : BindableBase
     {
+        #region Public Properties.
+
         public string Id { get; private set; }
 
         private string _name;
@@ -28,13 +30,6 @@ namespace RFM.Models
             get => _createdOn;
             private set => SetProperty(ref _createdOn, value);
         }
-
-        public Item()
-        {
-            Id = Guid.NewGuid().ToString();
-            CreatedOn = DateTime.Now;
-        }
-
 
         private bool _isSelected;
         public bool IsSelected
@@ -69,6 +64,33 @@ namespace RFM.Models
         {
             get => _itemType;
             set => SetProperty(ref _itemType, value);
+        }
+
+        #endregion
+
+        #region Constructors.
+
+        public Item()
+        {
+            Id = Guid.NewGuid().ToString();
+            CreatedOn = DateTime.Now;
+        }
+
+        #endregion
+
+        public virtual void Browse()
+        {
+            ItemType?.Browse(this);
+        }
+
+        public virtual void Run(string startupArgs)
+        {
+            ItemType?.Run(this, startupArgs);
+        }
+
+        public virtual void Open()
+        {
+            Run(null);
         }
     }
 }

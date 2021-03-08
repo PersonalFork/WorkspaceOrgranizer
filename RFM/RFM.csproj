@@ -83,6 +83,9 @@
     <Compile Include="Views\AddApplicationPage.xaml.cs">
       <DependentUpon>AddApplicationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditApplication.xaml.cs">
+      <DependentUpon>EditApplication.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditSectionPage.xaml.cs">
       <DependentUpon>EditSectionPage.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DashboardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditApplication.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

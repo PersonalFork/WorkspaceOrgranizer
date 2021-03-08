@@ -1,7 +1,15 @@
-﻿using Prism.Mvvm;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Xml.Serialization;
+using Prism.Mvvm;
 
 namespace RFM.Models
 {
+    [XmlInclude(typeof(ExecutableItemType))]
+    [XmlInclude(typeof(FileItemType))]
+    [XmlInclude(typeof(DirectoryItemType))]
+    [XmlInclude(typeof(HyperlinkItemType))]
+    [XmlType("ItemType")]
     public abstract class ItemType : BindableBase
     {
         private string _description;
@@ -28,14 +36,44 @@ namespace RFM.Models
         private string _filter;
         public string Filter
         {
-            get { return _filter; }
-            set { SetProperty(ref _filter, value); }
+            get => _filter;
+            set => SetProperty(ref _filter, value);
         }
 
-        public abstract void Run(Item application, params string[] args);
-        public abstract void RunAsAdmin(Item application, params string[] args);
-        public abstract void Browse(Item application);
-        public abstract void Open(Item application);
+        public virtual void Run(Item application, string args)
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = application.Location;
+            process.StartInfo.CreateNoWindow = false;
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.Arguments = args;
+            process.Start();
+        }
+
+        public virtual void RunAsAdmin(Item application, params string[] args)
+        {
+
+        }
+
+        public virtual void Browse(Item application)
+        {
+            string path = Path.GetDirectoryName(application.Location);
+            if (Directory.Exists(path))
+            {
+                try
+                {
+                    Process.Start("explorer.exe", path);
+                }
+                catch
+                {
+                    //_logger.Warn("Could not open directory :" + ex.Message);
+                }
+            }
+        }
+        public virtual void Open(Item application)
+        {
+            Run(application, null);
+        }
 
         public ItemType(string type)
         {
