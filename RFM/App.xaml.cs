@@ -49,7 +49,7 @@ namespace RFM
             containerRegistry.RegisterForNavigation<ViewSectionPage>(Pages.ViewSection);
             containerRegistry.RegisterForNavigation<EditSectionPage>(Pages.EditSection);
             containerRegistry.RegisterForNavigation<AddApplicationPage>(Pages.AddApplication);
-            containerRegistry.RegisterForNavigation<EditApplication>(Pages.EditApplication);
+            containerRegistry.RegisterForNavigation<EditApplicationPage>(Pages.EditApplication);
             containerRegistry.RegisterForNavigation<LoadingPage>(Pages.Loading);
         }
     }

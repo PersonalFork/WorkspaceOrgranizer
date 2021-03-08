@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 using Prism.Mvvm;
 
@@ -16,6 +17,7 @@ namespace RFM.Common
         }
 
         private Workspace _selectedSection;
+        [XmlIgnore]
         public Workspace SelectedSection
         {
             get => _selectedSection;

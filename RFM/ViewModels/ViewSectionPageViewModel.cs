@@ -1,5 +1,6 @@
-﻿
-using System;
+﻿using System;
+using System.Threading.Tasks;
+using log4net;
 using Prism.Commands;
 using Prism.Regions;
 
@@ -15,8 +16,10 @@ namespace RFM.ViewModels
     public class ViewSectionPageViewModel : ViewModelBase
     {
 
-        private IPersistenceService _persistanceService;
+        private readonly IPersistenceService _persistanceService;
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(ViewSectionPageViewModel));
 
+        public DelegateCommand<Item> LaunchCommand { get; }
         public DelegateCommand AddApplicationCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand DeleteSectionCommand { get; private set; }
@@ -27,6 +30,8 @@ namespace RFM.ViewModels
         public DelegateCommand<Item> EditApplicationCommand { get; private set; }
         public DelegateCommand OpenCommand { get; }
         public DelegateCommand RunCommand { get; }
+        public DelegateCommand CloneCommand { get; private set; }
+        public DelegateCommand CloseCommand { get; private set; }
 
         private Item _selectedApplication;
         public Item SelectedItem
@@ -38,7 +43,7 @@ namespace RFM.ViewModels
         public ViewSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
             _persistanceService = persistanceService;
-
+            LaunchCommand = new DelegateCommand<Item>(DoLaunch);
             BackCommand = new DelegateCommand(DoGoBack);
             DeleteSectionCommand = new DelegateCommand(DoDeleteSection);
             EditSectionCommand = new DelegateCommand(DoEditSection);
@@ -49,6 +54,72 @@ namespace RFM.ViewModels
             EditApplicationCommand = new DelegateCommand<Item>(DoEditApplication);
             OpenCommand = new DelegateCommand(DoOpenApplication);
             RunCommand = new DelegateCommand(DoRunApplication);
+            CloseCommand = new DelegateCommand(DoClose);
+            CloneCommand = new DelegateCommand(DoClone);
+        }
+
+        private void DoClone()
+        {
+            CloneAppDialogViewModel dialog = new CloneAppDialogViewModel(Workflow.Sections);
+            Workspace workspace = DialogService.ShowDialog(dialog);
+            if (workspace == null)
+            {
+                return;
+            }
+            Item item = new Item()
+            {
+                CreatedOn = DateTime.Now,
+                Description = SelectedItem.Description,
+                Name = $"{SelectedItem.Name}-Clone",
+                ItemType = SelectedItem.ItemType,
+                Location = SelectedItem.Location,
+                StartupArgs = SelectedItem.StartupArgs
+            };
+            workspace.Items.Add(item);
+
+            // Save configuration.
+            Task.Run(() =>
+            {
+                _persistanceService.SaveOrUpdateWorkflow(Workflow);
+            });
+
+            // Show clone success dialog.
+            string message = $"Item '{SelectedItem.Name}' has been cloned successfully to workspace '{workspace.Name}'";
+            InfoDialogViewModel infoDialog = new InfoDialogViewModel("Success", message, Dialogs.Common.AlertType.Success);
+            DialogService.ShowDialog(infoDialog, 3);
+        }
+
+        private void DoClose()
+        {
+            UnselectItem(SelectedItem);
+        }
+
+        private void DoLaunch(Item item)
+        {
+            if (item == null)
+            {
+                return;
+            }
+            try
+            {
+                switch (item.ItemType.Type)
+                {
+                    case ItemTypeConstants.Directory:
+                        item.Browse();
+                        break;
+                    case ItemTypeConstants.Hyperlink:
+                    case ItemTypeConstants.Executable:
+                    case ItemTypeConstants.File:
+                        item.Run(item.StartupArgs);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                _logger.Error(ex);
+            }
         }
 
         private void DoOpenApplication()
@@ -63,7 +134,7 @@ namespace RFM.ViewModels
 
         private void DoEditApplication(Item item)
         {
-            Browse(Pages.EditApplication, item.ToNavigationParameter());
+            Browse(Pages.EditApplication, SelectedItem.ToNavigationParameter());
         }
 
         private void DoDeleteItem()
@@ -78,6 +149,10 @@ namespace RFM.ViewModels
             {
                 Workflow.SelectedSection.Items.Remove(SelectedItem);
                 SelectedItem = null;
+                Task.Run(() =>
+                {
+                    _persistanceService.SaveOrUpdateWorkflow(Workflow);
+                });
             }
         }
 
@@ -141,7 +216,7 @@ namespace RFM.ViewModels
         private void DoDeleteSection()
         {
             string title = "Confirm Delete";
-            string question = $"Do you want to delete the section `{Workflow.SelectedSection.Name}` ?";
+            string question = $"Do you want to delete the workspace : `{Workflow.SelectedSection.Name}` ?";
             string yesText = "Yes";
             string noText = "Cancel";
             ConfirmDialogViewModel dialog = new ConfirmDialogViewModel(title, question, yesText, noText);
@@ -149,6 +224,10 @@ namespace RFM.ViewModels
             if (dialogResult == true)
             {
                 Workflow.Sections.Remove(Workflow.SelectedSection);
+                Task.Run(() =>
+                {
+                    _persistanceService.SaveOrUpdateWorkflow(Workflow);
+                });
                 Browse(Pages.Dashboard);
             }
         }

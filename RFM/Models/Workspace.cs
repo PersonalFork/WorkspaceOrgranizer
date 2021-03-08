@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
@@ -8,11 +9,20 @@ namespace RFM.Models
 {
     public class Workspace : BindableBase
     {
+        private List<string> _colors;
+
         private string _id;
         public string Id
         {
             get => _id;
             set => SetProperty(ref _id, value);
+        }
+
+        private string _color;
+        public string Color
+        {
+            get => _color;
+            set => SetProperty(ref _color, value);
         }
 
         private string _name;
@@ -44,11 +54,32 @@ namespace RFM.Models
             set => SetProperty(ref _items, value);
         }
 
+        private static Random random;
         public Workspace()
         {
+            if (random == null)
+            {
+                random = new Random();
+            }
+            PopulateColors();
+
             Id = Guid.NewGuid().ToString();
             CreatedOn = DateTime.Now;
             Items = new ObservableCollection<Item>();
+            Color = _colors[random.Next(0, _colors.Count - 1)];
+        }
+
+        private void PopulateColors()
+        {
+            _colors = new List<string>() {
+                "#42D10B",
+                "#DE0229",
+                "Yellow",
+                "Orange",
+                "#B300B3",
+                "Cyan",
+                "#4646E4"
+            };
         }
     }
 }

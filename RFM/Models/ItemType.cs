@@ -44,6 +44,15 @@ namespace RFM.Models
         public virtual void Run(Item application, string args)
         {
             Process process = new Process();
+            try
+            {
+                string directory = Path.GetDirectoryName(application.Location);
+                process.StartInfo.WorkingDirectory = directory;
+            }
+            catch (System.Exception)
+            {
+                //absorb the exception.  
+            }
             process.StartInfo.FileName = application.Location;
             process.StartInfo.CreateNoWindow = false;
             process.StartInfo.UseShellExecute = true;

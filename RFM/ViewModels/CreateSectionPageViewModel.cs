@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Regions;
 
@@ -13,7 +12,12 @@ namespace RFM.ViewModels
 {
     public class CreateSectionPageViewModel : ViewModelBase
     {
+        #region Private Variable Declarations.
+
         private readonly IPersistenceService _persistanceService;
+
+        #endregion
+
         #region Public Properties.
 
         private string _name;
@@ -63,7 +67,15 @@ namespace RFM.ViewModels
             Workflow.Sections.Add(newSection);
             Workflow.SelectedSection = newSection;
             SaveSettings();
+            string name = Name;
             Browse(Pages.ViewSection);
+
+            // Show Success Dialog.
+            Task.Run(() =>
+            {
+                InfoDialogViewModel vm = new InfoDialogViewModel("Success", $"Workspace '{name}' has been created successfully", Dialogs.Common.AlertType.Success);
+                DialogService.ShowDialog(vm, 3);
+            });
         }
 
         private void SaveSettings()

@@ -66,7 +66,7 @@ namespace RFM.ViewModels
             {
                 Name = Name,
                 ItemType = ItemType,
-                Location = Location,
+                Location = Location.Replace("'", string.Empty).Replace("\"", string.Empty),
                 Description = Description,
                 StartupArgs = CommandLineArguments
             };

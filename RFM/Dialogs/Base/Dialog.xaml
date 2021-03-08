@@ -9,8 +9,8 @@
     ShowInTaskbar="False"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterOwner"
-    FontSize="20"
-    FontFamily="Segoe UI Light"
+    FontSize="{DynamicResource GlobalFontSize}"
+    FontFamily="{DynamicResource GlobalFontFamily}"
     WindowState="Maximized"
     WindowStyle="None">
     <Window.Resources>

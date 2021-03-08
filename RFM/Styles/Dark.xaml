@@ -1,7 +1,12 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:constants="clr-namespace:RFM.Common.Constants">
+
+    <sys:Double x:Key="GlobalFontSize">20</sys:Double>
+    <FontFamily x:Key="GlobalFontFamily">Segoe UI Light</FontFamily>
+
     <SolidColorBrush x:Key="DialogModalWindowBackgroundColor" Color="Black" />
     <SolidColorBrush x:Key="DialogHeaderBackgroundColor" Color="Black" />
     <SolidColorBrush x:Key="DialogHeaderForegroundColor" Color="White" />
@@ -13,16 +18,24 @@
     <SolidColorBrush x:Key="AppSubHeaderForegroundColor" Color="#13C9C9" />
 
     <BitmapImage x:Key="Logo" UriSource="/Assets/Dark/imageres_1001.ico" />
+    
     <BitmapImage x:Key="ImgQuestion" UriSource="/Assets/Dark/imageres_99.ico" />
+    <BitmapImage x:Key="ImgInfo" UriSource="/Assets/Dark/imageres_81.ico" />
+    <BitmapImage x:Key="ImgWarning" UriSource="/Assets/Dark/imageres_84.ico" />
+    <BitmapImage x:Key="ImgError" UriSource="/Assets/Dark/imageres_98.ico" />
+    <BitmapImage x:Key="ImgSuccess" UriSource="/Assets/Dark/CircleOk.png" />
+
     <BitmapImage x:Key="HyperlinkAppTypeIcon" UriSource="/Assets/Dark/hyperlink_red.png" />
     <BitmapImage x:Key="ExecutableAppTypeIcon" UriSource="/Assets/Dark/imageres_5323.ico" />
     <BitmapImage x:Key="FileAppTypeIcon" UriSource="/Assets/Dark/imageres_117.ico" />
     <BitmapImage x:Key="DirectoryAppTypeIcon" UriSource="/Assets/Dark/imageres_4.ico" />
+    <BitmapImage x:Key="RunIcon" UriSource="/Assets/Dark/imageres_5372.ico" />
+
 
     <Style TargetType="TextBlock" x:Key="AppHeaderStyle">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="{DynamicResource AppHeaderForegroundColor}" />
-        <Setter Property="FontSize" Value="32" />
+        <Setter Property="FontSize" Value="36" />
         <Setter Property="FontWeight" Value="Normal" />
     </Style>
 

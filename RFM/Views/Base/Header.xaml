@@ -18,7 +18,7 @@
                 Source="{DynamicResource Logo}" />
 
             <TextBlock
-                Text="Recent App Manager"
+                Text="Workspace Organizer"
                 VerticalAlignment="Center"
                 Style="{DynamicResource AppHeaderStyle}" 
                 />

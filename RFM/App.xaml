@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styles/Icons.xaml" />
                 <ResourceDictionary Source="Styles/Dark.xaml" />
                 <ResourceDictionary Source="Styles/Dialogs.xaml" />
+                <ResourceDictionary Source="Styles/ItemTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <conveters:MockConverter x:Key="MockConverter"/>
 

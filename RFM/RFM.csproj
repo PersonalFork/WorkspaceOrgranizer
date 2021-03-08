@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RFM</RootNamespace>
-    <AssemblyName>RFM</AssemblyName>
+    <AssemblyName>Workspace Organizer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -34,6 +34,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>imageres_1001.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
@@ -68,6 +71,15 @@
     <Compile Include="Converters\FileToImageIconConverter.cs" />
     <Compile Include="Converters\ItemTypeToBooleanConverter.cs" />
     <Compile Include="Converters\MockConverter.cs" />
+    <Compile Include="Dialogs\CloneDialog\CloneAppDialog.xaml.cs">
+      <DependentUpon>CloneAppDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CloneDialog\CloneAppDialogViewModel.cs" />
+    <Compile Include="Dialogs\Common\AlertType.cs" />
+    <Compile Include="Dialogs\InfoDialog.xaml.cs">
+      <DependentUpon>InfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InfoDialogViewModel.cs" />
     <Compile Include="Dialogs\ItemTypeDialogViewModel.cs" />
     <Compile Include="Dialogs\ItemType\ItemTypeDialog.xaml.cs">
       <DependentUpon>ItemTypeDialog.xaml</DependentUpon>
@@ -80,14 +92,15 @@
     <Compile Include="Models\ItemType.cs" />
     <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="ViewModels\AddApplicationPageViewModel.cs" />
+    <Compile Include="ViewModels\EditApplicationPageViewModel.cs" />
     <Compile Include="ViewModels\EditSectionPageViewModel.cs" />
     <Compile Include="ViewModels\LoadingPageViewModel.cs" />
     <Compile Include="ViewModels\ViewSectionPageViewModel.cs" />
     <Compile Include="Views\AddApplicationPage.xaml.cs">
       <DependentUpon>AddApplicationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EditApplication.xaml.cs">
-      <DependentUpon>EditApplication.xaml</DependentUpon>
+    <Compile Include="Views\EditApplicationPage.xaml.cs">
+      <DependentUpon>EditApplicationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditSectionPage.xaml.cs">
       <DependentUpon>EditSectionPage.xaml</DependentUpon>
@@ -102,7 +115,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dialogs\CloneDialog\CloneAppDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\Confirm\ConfirmDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\InfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -119,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ItemTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,7 +171,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EditApplication.xaml">
+    <Page Include="Views\EditApplicationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,10 +265,21 @@
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Dark\CircleOk.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Dark\hyperlink_red.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Dark\imageres_1001.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Dark\imageres_5372.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Dark\imageres_84.ico" />
+    <Resource Include="Assets\Dark\imageres_98.ico" />
+    <Content Include="Assets\Dark\imageres_81.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Dark\imageres_99.ico">
@@ -262,9 +298,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Dependencies\FirstFloor.ModernUI.dll" />
+    <Resource Include="imageres_1001.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Light\" />
+    <Folder Include="Dialogs\Info\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

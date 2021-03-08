@@ -90,17 +90,47 @@
                             <Button CommandParameter="{Binding .}" Command="{Binding ElementName=itemsControlSections, Path=DataContext.ViewSectionCommand}">
                                 <Button.Template>
                                     <ControlTemplate>
-                                        <Grid
-                                            Cursor="Hand"
-                                            Margin="0,5,10.3,5"
-                                            Width="325"
-                                            Height="150"
-                                            Background="Black">
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Text="{Binding Name}" />
-                                        </Grid>
+                                        <Border BorderThickness="1" Margin="0,5,10,5">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                    <Setter Property="BorderThickness" Value="1" />
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="BorderBrush" Value="{Binding Color}" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Grid
+                                                Cursor="Hand"
+                                                Width="320"
+                                                Height="150"
+                                                Background="Black">
+                                                <TextBlock
+                                                    FontSize="24"
+                                                    Foreground="{Binding Color}"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Text="{Binding Name}" />
+                                                <Border
+                                                    Height="40"
+                                                    Width="40"
+                                                    Background="{Binding Color}"
+                                                    VerticalAlignment="Top"
+                                                    HorizontalAlignment="Right">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="20"
+                                                        FontFamily="Calibri"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="Black"
+                                                        Text="{Binding Name[0], Mode=OneWay}" />
+                                                </Border>
+                                            </Grid>
+                                        </Border>
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>

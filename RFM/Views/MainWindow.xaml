@@ -6,8 +6,8 @@
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:constants="clr-namespace:RFM.Common.Constants"
     WindowState="Maximized"
-    FontSize="20"
-    FontFamily="Segoe UI Light"
+    FontSize="{DynamicResource GlobalFontSize}"
+    FontFamily="{DynamicResource GlobalFontFamily}"
     Style="{StaticResource BlankWindow}"
     prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>

@@ -1,6 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:dialogs="clr-namespace:RFM.Dialogs">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogs="clr-namespace:RFM.Dialogs">
 
     <DataTemplate DataType="{x:Type dialogs:ConfirmDialogViewModel}">
         <dialogs:ConfirmDialog />
@@ -8,6 +9,14 @@
 
     <DataTemplate DataType="{x:Type dialogs:ItemTypeDialogViewModel}">
         <dialogs:ItemTypeDialog />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type dialogs:InfoDialogViewModel}">
+        <dialogs:InfoDialog />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type dialogs:CloneAppDialogViewModel}">
+        <dialogs:CloneAppDialog />
     </DataTemplate>
 
 </ResourceDictionary>

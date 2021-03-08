@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RFM.Views
+namespace RFM.Dialogs
 {
     /// <summary>
-    /// Interaction logic for EditApplication.xaml
+    /// Interaction logic for CloneAppDialog.xaml
     /// </summary>
-    public partial class EditApplication : UserControl
+    public partial class CloneAppDialog : UserControl
     {
-        public EditApplication()
+        public CloneAppDialog()
         {
             InitializeComponent();
         }
