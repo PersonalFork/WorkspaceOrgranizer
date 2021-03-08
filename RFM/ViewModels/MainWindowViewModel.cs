@@ -2,6 +2,8 @@
 using Prism.Commands;
 using Prism.Regions;
 using RFM.Common;
+using RFM.Common.Constants;
+using RFM.Common.Extensions;
 using RFM.Dialogs;
 
 namespace RFM.ViewModels
@@ -38,7 +40,8 @@ namespace RFM.ViewModels
             }
             Task.Run(() =>
             {
-                GoHome();
+                RegionManager?.BrowseRegionToPage(Regions.HeaderRegion, Pages.HomeHeader);
+                RegionManager?.BrowseRegionToPage(Regions.ContentRegion, Pages.Loading);
             });
         }
 

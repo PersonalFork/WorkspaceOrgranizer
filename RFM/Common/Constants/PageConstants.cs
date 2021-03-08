@@ -9,5 +9,6 @@
         public const string EditSection = "EDIT_SECTION";
         public const string AddApplication = "ADD_APPLICATION";
         public const string EditApplication = "EDIT_APPLICATION";
+        public const string Loading = "LOADING";
     }
 }

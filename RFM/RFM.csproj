@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\SelectFileBehavior.cs" />
     <Compile Include="Common\Constants\ItemTypeConstants.cs" />
+    <Compile Include="Common\Extensions\XmlExtensions.cs" />
     <Compile Include="Converters\FileToImageIconConverter.cs" />
     <Compile Include="Converters\ItemTypeToBooleanConverter.cs" />
     <Compile Include="Converters\MockConverter.cs" />
@@ -77,8 +78,10 @@
     <Compile Include="Models\HyperlinkItemType.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemType.cs" />
+    <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="ViewModels\AddApplicationPageViewModel.cs" />
     <Compile Include="ViewModels\EditSectionPageViewModel.cs" />
+    <Compile Include="ViewModels\LoadingPageViewModel.cs" />
     <Compile Include="ViewModels\ViewSectionPageViewModel.cs" />
     <Compile Include="Views\AddApplicationPage.xaml.cs">
       <DependentUpon>AddApplicationPage.xaml</DependentUpon>
@@ -88,6 +91,9 @@
     </Compile>
     <Compile Include="Views\EditSectionPage.xaml.cs">
       <DependentUpon>EditSectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewSectionPage.xaml.cs">
       <DependentUpon>ViewSectionPage.xaml</DependentUpon>
@@ -145,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditSectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

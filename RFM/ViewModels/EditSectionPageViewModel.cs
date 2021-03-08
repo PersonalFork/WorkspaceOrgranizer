@@ -1,19 +1,26 @@
-﻿using Prism.Commands;
+﻿using log4net;
+
+using Prism.Commands;
 using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Dialogs;
+using RFM.Services;
 
 namespace RFM.ViewModels
 {
     public class EditSectionPageViewModel : ViewModelBase
     {
+        private readonly IPersistenceService _persistanceService;
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(EditSectionPageViewModel));
+
         public DelegateCommand UpdateSectionCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
 
-        public EditSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService) : base(workflow, regionManager, dialogService)
+        public EditSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _persistanceService = persistanceService;
             BackCommand = new DelegateCommand(DoGoBack);
             UpdateSectionCommand = new DelegateCommand(DoUpdateSection);
         }

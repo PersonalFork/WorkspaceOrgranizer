@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 using Prism.Ioc;
 using Prism.Unity;
@@ -6,6 +7,7 @@ using Prism.Unity;
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Dialogs;
+using RFM.Services;
 using RFM.Views;
 
 using Unity;
@@ -34,6 +36,10 @@ namespace RFM
             containerRegistry.RegisterInstance<IWorkflow>(new Workflow());
             _container?.RegisterType<IDialogService, DialogService>();
 
+            string settingsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            IPersistenceService persistanceService = new PersistenceService(settingsDirectory);
+            _container.RegisterInstance(persistanceService);
+
             // Headers.
             containerRegistry.RegisterForNavigation<Header>(Pages.HomeHeader);
 
@@ -44,6 +50,7 @@ namespace RFM
             containerRegistry.RegisterForNavigation<EditSectionPage>(Pages.EditSection);
             containerRegistry.RegisterForNavigation<AddApplicationPage>(Pages.AddApplication);
             containerRegistry.RegisterForNavigation<EditApplication>(Pages.EditApplication);
+            containerRegistry.RegisterForNavigation<LoadingPage>(Pages.Loading);
         }
     }
 }

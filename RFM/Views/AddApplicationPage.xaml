@@ -58,6 +58,7 @@
                 </StackPanel>
 
                 <TextBox
+                    x:Name="txtAppName"
                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Grid.Column="1"
                     Margin="5" />

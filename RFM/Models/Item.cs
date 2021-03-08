@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 using Prism.Mvvm;
 
@@ -8,7 +9,7 @@ namespace RFM.Models
     {
         #region Public Properties.
 
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         private string _name;
         public string Name
@@ -28,7 +29,7 @@ namespace RFM.Models
         public DateTime CreatedOn
         {
             get => _createdOn;
-            private set => SetProperty(ref _createdOn, value);
+            set => SetProperty(ref _createdOn, value);
         }
 
         private bool _isSelected;

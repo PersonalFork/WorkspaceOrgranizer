@@ -44,7 +44,7 @@
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
-                                    Text="Create Section" />
+                                    Text="Create Workspace" />
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -68,10 +68,10 @@
             </Grid.Style>
             <TextBlock
                 Style="{DynamicResource SubHeaderStyle}"
-                Text="Sections"
+                Text="Workspaces"
                 VerticalAlignment="Center" />
             <Button
-                Content="Create Section"
+                Content="Create Workspace"
                 Command="{Binding CreateSectionCommand}"
                 HorizontalAlignment="Right"
                 Margin="5,5,0,5" />

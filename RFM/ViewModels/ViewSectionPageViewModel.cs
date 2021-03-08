@@ -8,11 +8,15 @@ using RFM.Common.Constants;
 using RFM.Common.Extensions;
 using RFM.Dialogs;
 using RFM.Models;
+using RFM.Services;
 
 namespace RFM.ViewModels
 {
     public class ViewSectionPageViewModel : ViewModelBase
     {
+
+        private IPersistenceService _persistanceService;
+
         public DelegateCommand AddApplicationCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand DeleteSectionCommand { get; private set; }
@@ -31,8 +35,10 @@ namespace RFM.ViewModels
             set => SetProperty(ref _selectedApplication, value);
         }
 
-        public ViewSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService) : base(workflow, regionManager, dialogService)
+        public ViewSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _persistanceService = persistanceService;
+
             BackCommand = new DelegateCommand(DoGoBack);
             DeleteSectionCommand = new DelegateCommand(DoDeleteSection);
             EditSectionCommand = new DelegateCommand(DoEditSection);

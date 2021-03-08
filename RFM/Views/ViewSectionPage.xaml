@@ -395,7 +395,7 @@
                                 </Button.Style>
                             </Button>
                             <Button
-                                Content="Edit Application"
+                                Content="Edit"
                                 Margin="5"
                                 Command="{Binding EditApplicationCommand}" />
                             <Button

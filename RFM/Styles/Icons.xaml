@@ -1,6 +1,4 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <DataTemplate x:Key="QuestionIcon">
         <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
@@ -57,5 +55,33 @@
             </Grid>
         </Viewbox>
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="LoaderIcon">
+        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+            <Grid>
+                <Path
+                    Width="256"
+                    Height="256"
+                    Margin="0,0,0,0"
+                    Data="M20.104999,25.420994L24.278002,29.594032C21.860994,31.061014 19.034992,31.921001 16.000996,31.921001 13.129002,31.921001 10.439,31.155008 8.1079921,29.829019L12.342,25.595005C13.481999,26.026035 14.711994,26.274021 16.000996,26.274021 17.459003,26.274021 18.845997,25.967991 20.104999,25.420994z M26.248003,14.522968L31.929001,14.522968C31.970001,14.983968 32,15.448995 32,15.920004 32,20.602016 29.978989,24.798983 26.774996,27.725012L22.778002,23.728973C24.963991,21.82797 26.352999,19.037012 26.352999,15.920004 26.352999,15.444966 26.309999,14.98 26.248003,14.522968z M0.071998594,14.522968L5.7529968,14.522968C5.6910004,14.98 5.6480011,15.444966 5.6480011,15.920004 5.6480011,19.193018 7.179007,22.113981 9.5600032,24.011995L5.551001,28.019995C2.1570048,25.087007 0,20.758022 0,15.920004 0,15.448995 0.029998772,14.983968 0.071998594,14.522968z M17.545002,0C24.134996,0.63098227,29.549988,5.2599558,31.350998,11.435989L25.316988,11.435989C23.855989,8.4149894,20.976992,6.2129597,17.545002,5.6959914z M14.455997,0L14.455997,5.6959914C11.024999,6.2129597,8.1449947,8.4149894,6.6839966,11.435989L0.65000151,11.435989C2.4509958,5.2599558,7.8649959,0.63098227,14.455997,0z"
+                    RenderTransformOrigin="0.5,0.5"
+                    Stretch="Uniform">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=ContentControl, Mode=FindAncestor}, Path=Foreground, FallbackValue=White}" />
+                        </Style>
+                    </Path.Style>
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <TransformGroup.Children>
+                                <RotateTransform Angle="0" />
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </TransformGroup.Children>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+        </Viewbox>
+    </DataTemplate>
+
 </ResourceDictionary>

@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using System.Threading.Tasks;
+using Prism.Commands;
 using Prism.Regions;
 
 using RFM.Common;
@@ -6,6 +7,7 @@ using RFM.Common.Constants;
 using RFM.Common.Extensions;
 using RFM.Dialogs;
 using RFM.Models;
+using RFM.Services;
 
 namespace RFM.ViewModels
 {
@@ -46,11 +48,14 @@ namespace RFM.ViewModels
             set => SetProperty(ref _itemType, value);
         }
 
+        private IPersistenceService _persistanceService;
+
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand AddApplicationCommand { get; private set; }
 
-        public AddApplicationPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService) : base(workflow, regionManager, dialogService)
+        public AddApplicationPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _persistanceService = persistanceService;
             BackCommand = new DelegateCommand(DoGoBack);
             AddApplicationCommand = new DelegateCommand(DoAddApplication, CanAddApplication);
         }
@@ -66,6 +71,10 @@ namespace RFM.ViewModels
                 StartupArgs = CommandLineArguments
             };
             Workflow.SelectedSection.Items.Add(item);
+            Task.Run(() =>
+            {
+                _persistanceService.SaveOrUpdateWorkflow(Workflow);
+            });
             Browse(Pages.ViewSection);
         }
 

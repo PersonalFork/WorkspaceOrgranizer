@@ -1,15 +1,21 @@
-﻿using Prism.Commands;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Prism.Commands;
 using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Dialogs;
 using RFM.Models;
+using RFM.Services;
 
 namespace RFM.ViewModels
 {
     public class CreateSectionPageViewModel : ViewModelBase
     {
+        private readonly IPersistenceService _persistanceService;
+        #region Public Properties.
+
         private string _name;
         public string Name
         {
@@ -27,13 +33,20 @@ namespace RFM.ViewModels
         public DelegateCommand BackCommand { get; private set; }
         public DelegateCommand CreateSectionCommand { get; private set; }
 
-        public CreateSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService) : base(workflow, regionManager, dialogService)
+        #endregion
+
+        #region Constructors.
+
+        public CreateSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _persistanceService = persistanceService;
             BackCommand = new DelegateCommand(DoGoBack);
             CreateSectionCommand = new DelegateCommand(DoCreateSection, CanCreateSection)
                 .ObservesProperty(() => Name)
                 .ObservesProperty(() => Description);
         }
+
+        #endregion
 
         private void DoGoBack()
         {
@@ -49,7 +62,16 @@ namespace RFM.ViewModels
             };
             Workflow.Sections.Add(newSection);
             Workflow.SelectedSection = newSection;
+            SaveSettings();
             Browse(Pages.ViewSection);
+        }
+
+        private void SaveSettings()
+        {
+            Task.Run(() =>
+            {
+                _persistanceService.SaveOrUpdateWorkflow(Workflow);
+            });
         }
 
         private bool CanCreateSection()

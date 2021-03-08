@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 using Prism.Mvvm;
 
@@ -11,7 +12,7 @@ namespace RFM.Models
         public string Id
         {
             get => _id;
-            private set => SetProperty(ref _id, value);
+            set => SetProperty(ref _id, value);
         }
 
         private string _name;
@@ -32,10 +33,11 @@ namespace RFM.Models
         public DateTime CreatedOn
         {
             get => _createdOn;
-            private set => SetProperty(ref _createdOn, value);
+            set => SetProperty(ref _createdOn, value);
         }
 
         private ObservableCollection<Item> _items;
+        [XmlArray("Items")]
         public ObservableCollection<Item> Items
         {
             get => _items;

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+
 using Prism.Mvvm;
 
 namespace RFM.Models
