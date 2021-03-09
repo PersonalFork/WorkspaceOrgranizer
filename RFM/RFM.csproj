@@ -297,6 +297,9 @@
     <Content Include="Assets\Dark\imageres_5323.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Dark\Play_Circle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Dependencies\FirstFloor.ModernUI.dll" />
     <Resource Include="imageres_1001.ico" />
   </ItemGroup>

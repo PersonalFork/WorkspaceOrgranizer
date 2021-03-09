@@ -29,8 +29,7 @@
     <BitmapImage x:Key="ExecutableAppTypeIcon" UriSource="/Assets/Dark/imageres_5323.ico" />
     <BitmapImage x:Key="FileAppTypeIcon" UriSource="/Assets/Dark/imageres_117.ico" />
     <BitmapImage x:Key="DirectoryAppTypeIcon" UriSource="/Assets/Dark/imageres_4.ico" />
-    <BitmapImage x:Key="RunIcon" UriSource="/Assets/Dark/imageres_5372.ico" />
-
+    <BitmapImage x:Key="RunIcon" UriSource="/Assets/Dark/Play_Circle.png" />
 
     <Style TargetType="TextBlock" x:Key="AppHeaderStyle">
         <Setter Property="FontFamily" Value="Segoe UI" />

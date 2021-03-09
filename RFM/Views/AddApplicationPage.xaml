@@ -61,6 +61,7 @@
                     x:Name="txtAppName"
                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Grid.Column="1"
+                    MaxLength="25"
                     Margin="5" />
 
                 <StackPanel
