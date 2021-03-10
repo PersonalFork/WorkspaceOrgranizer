@@ -54,22 +54,28 @@
                     <TextBlock Text="Content" />
                 </StackPanel>
                 <TextBox
-                    x:Name="txtNoteNate"
+                    x:Name="txtName"
                     Margin="5"
                     MaxLength="25"
                     Grid.Column="1"
                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <TextBox
                     Margin="5"
-                    MaxLength="25"
+                    MaxLength="50"
                     Grid.Row="1"
                     Grid.Column="1"
                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <TextBox
+                    x:Name="txtContent"
                     Margin="5"
                     Grid.Column="1"
                     AcceptsReturn="True"
                     Grid.Row="2"
+                    TextWrapping="Wrap"
+                    FontFamily="Consolas"
+                    FontSize="16"
+                    Foreground="Black"
+                    Background="LightYellow"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 <Button

@@ -116,19 +116,53 @@
                 Margin="5,5,0,5">
                 <Button
                     Margin="5,0,0,0"
-                    Content="Delete Workspace"
                     Command="{Binding DeleteSectionCommand}"
-                    Width="auto" />
+                    Width="auto">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Foreground="#E94D4D"
+                                Text=""
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                Margin="-5,5,5,5" />
+                            <TextBlock Text=" Delete Workspace" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
                 <Button
                     Margin="5,0,0,0"
-                    Content="Edit Workspace"
                     Command="{Binding EditSectionCommand}"
-                    Width="auto" />
+                    Width="auto">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Foreground="#8AFF8A"
+                                Text=""
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                Margin="-5,5,5,5" />
+                            <TextBlock Text=" Edit Workspace" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
                 <Button
                     Margin="5,0,0,0"
-                    Content="Add Application"
                     Command="{Binding AddApplicationCommand}"
-                    Width="auto" />
+                    Width="auto">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                FontWeight="Bold"
+                                Foreground="#8AB4FF"
+                                Text=""
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                Margin="-5,5,5,5" />
+                            <TextBlock Text=" Add Application" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </StackPanel>
 
             <!--  Application Details.  -->
@@ -294,10 +328,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button
-                                Content="Run"
-                                Margin="5"
-                                Command="{Binding RunCommand}">
+                            <Button Margin="5" Command="{Binding RunCommand}">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                         <Setter Property="Visibility" Value="Collapsed" />
@@ -308,16 +339,23 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#09BFCB"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Run" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
                             </Button>
-                            <Button
-                                Content="Open In Explorer"
-                                Margin="5"
-                                Command="{Binding OpenInExplorerCommand}">
+                            <Button Margin="5" Command="{Binding OpenInExplorerCommand}">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                         <Style.Triggers>
-
                                             <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.File}">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
@@ -327,24 +365,72 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#FFE400"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,8,5,5" />
+                                        <TextBlock Text="Open In Explorer" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="5" Command="{Binding EditApplicationCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#8AFF8A"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Edit" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="5" Command="{Binding DeleteItemCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#E94D4D"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Delete" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
                             </Button>
                             <Button
-                                Content="Edit"
-                                Margin="5"
-                                Command="{Binding EditApplicationCommand}" />
-                            <Button
-                                Content="Delete"
-                                Margin="5"
-                                Command="{Binding DeleteItemCommand}" />
-                            <Button
                                 ToolTip="Create a copy of an application from one workspace to another"
-                                Content="Clone"
                                 Margin="5"
-                                Command="{Binding CloneCommand}" />
-                            <Button
-                                Content="Close"
-                                Margin="5"
-                                Command="{Binding CloseCommand}" />
+                                Command="{Binding CloneCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#D157F1"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Clone" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="5" Command="{Binding CloseCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Close" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
                         </WrapPanel>
                     </StackPanel>
 

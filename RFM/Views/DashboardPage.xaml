@@ -71,10 +71,21 @@
                 Text="Workspaces"
                 VerticalAlignment="Center" />
             <Button
-                Content="Create Workspace"
                 Command="{Binding CreateSectionCommand}"
                 HorizontalAlignment="Right"
-                Margin="5,5,0,5" />
+                Margin="5,5,0,5">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                                Foreground="#8AFF8A"
+                                Text=""
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                Margin="-5,5,5,5" />
+                        <TextBlock Text=" Create Workspace" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             <ScrollViewer Grid.Row="1">
                 <ItemsControl
                     x:Name="itemsControlSections"
