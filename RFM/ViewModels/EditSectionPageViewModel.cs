@@ -7,6 +7,7 @@ using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 using RFM.Services;
 
@@ -14,6 +15,7 @@ namespace RFM.ViewModels
 {
     public class EditSectionPageViewModel : ViewModelBase
     {
+        private readonly ILoader _loader;
         private readonly IPersistenceService _persistanceService;
         private static readonly ILog _logger = LogManager.GetLogger(typeof(EditSectionPageViewModel));
 
@@ -34,8 +36,13 @@ namespace RFM.ViewModels
         public DelegateCommand UpdateSectionCommand { get; private set; }
         public DelegateCommand BackCommand { get; private set; }
 
-        public EditSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
+        public EditSectionPageViewModel(IWorkflow workflow,
+            IRegionManager regionManager,
+            ILoader loader,
+            IDialogService dialogService,
+            IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _loader = loader;
             _persistanceService = persistanceService;
             BackCommand = new DelegateCommand(DoGoBack);
             UpdateSectionCommand = new DelegateCommand(DoUpdateSection, CanUpdateSection)
@@ -59,15 +66,23 @@ namespace RFM.ViewModels
             bool? dialogResult = DialogService.ShowDialog(dialog);
             if (dialogResult == true)
             {
-                Workflow.SelectedSection.Name = Name;
-                Workflow.SelectedSection.Description = Description;
-
-                Task.Run(() =>
+                try
                 {
-                    _persistanceService.SaveOrUpdateWorkflow(Workflow);
-                });
+                    _loader.ShowLoader("Please wait while workspace is getting updated...");
+                    Workflow.SelectedSection.Name = Name;
+                    Workflow.SelectedSection.Description = Description;
+                    Workflow.SelectedSection.LastUpdated = DateTime.Now;
+                    Task.Run(() =>
+                    {
+                        _persistanceService.SaveOrUpdateWorkflow(Workflow);
+                    });
 
-                Browse(Pages.Dashboard);
+                    Browse(Pages.Dashboard);
+                }
+                finally
+                {
+                    _loader.HideLoader();
+                }
             }
         }
 

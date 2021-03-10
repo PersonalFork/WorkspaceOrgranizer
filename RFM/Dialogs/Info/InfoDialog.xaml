@@ -111,6 +111,8 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             FontFamily="Segoe UI Light"
+            MaxWidth="400"
+            TextWrapping="Wrap"
             FontSize="20"
             Foreground="{DynamicResource DialogContentForegroundColor}"
             Text="{Binding Message, FallbackValue='Is it done.'}" />

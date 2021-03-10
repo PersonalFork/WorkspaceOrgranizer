@@ -6,6 +6,7 @@ using Prism.Unity;
 
 using RFM.Common;
 using RFM.Common.Constants;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 using RFM.Services;
 using RFM.Views;
@@ -35,6 +36,7 @@ namespace RFM
 
             containerRegistry.RegisterInstance<IWorkflow>(new Workflow());
             _container?.RegisterType<IDialogService, DialogService>();
+            _container?.RegisterInstance<ILoader>(new Loader("Please Wait"));
 
             string settingsDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             IPersistenceService persistanceService = new PersistenceService(settingsDirectory);

@@ -4,6 +4,7 @@ using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 using RFM.Models;
 using RFM.Services;
@@ -12,6 +13,7 @@ namespace RFM.ViewModels
 {
     public class CreateSectionPageViewModel : ViewModelBase
     {
+        private readonly ILoader _loader;
         #region Private Variable Declarations.
 
         private readonly IPersistenceService _persistanceService;
@@ -41,8 +43,14 @@ namespace RFM.ViewModels
 
         #region Constructors.
 
-        public CreateSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
+        public CreateSectionPageViewModel(
+            IWorkflow workflow,
+            IRegionManager regionManager,
+            IDialogService dialogService,
+            ILoader loader,
+            IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _loader = loader;
             _persistanceService = persistanceService;
             BackCommand = new DelegateCommand(DoGoBack);
             CreateSectionCommand = new DelegateCommand(DoCreateSection, CanCreateSection)
@@ -59,23 +67,31 @@ namespace RFM.ViewModels
 
         private void DoCreateSection()
         {
-            Workspace newSection = new Workspace
+            try
             {
-                Name = Name,
-                Description = Description
-            };
-            Workflow.Sections.Add(newSection);
-            Workflow.SelectedSection = newSection;
-            SaveSettings();
-            string name = Name;
-            Browse(Pages.ViewSection);
+                _loader.ShowLoader("Please wait while we are creating a workspace for you ...");
+                Workspace newSection = new Workspace
+                {
+                    Name = Name,
+                    Description = Description
+                };
+                Workflow.Sections.Add(newSection);
+                Workflow.SelectedSection = newSection;
+                SaveSettings();
+                string name = Name;
+                Browse(Pages.ViewSection);
 
-            // Show Success Dialog.
-            Task.Run(() =>
+                // Show Success Dialog.
+                Task.Run(() =>
+                {
+                    InfoDialogViewModel vm = new InfoDialogViewModel("Success", $"Workspace '{name}' has been created successfully", Dialogs.Common.AlertType.Success);
+                    DialogService.ShowDialog(vm, 3);
+                });
+            }
+            finally
             {
-                InfoDialogViewModel vm = new InfoDialogViewModel("Success", $"Workspace '{name}' has been created successfully", Dialogs.Common.AlertType.Success);
-                DialogService.ShowDialog(vm, 3);
-            });
+                _loader.HideLoader();
+            }
         }
 
         private void SaveSettings()

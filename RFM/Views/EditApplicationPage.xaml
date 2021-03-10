@@ -194,10 +194,16 @@
                 <TextBox
                     Visibility="{Binding ElementName=grdIsExecutable, Path=Visibility}"
                     Grid.Row="4"
+                    FontSize="16"
+                    FontFamily="Consolas"
                     TextWrapping="Wrap"
                     Grid.Column="3"
                     Text="{Binding CommandLineArguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="5,5,5,295"
+                    Margin="5"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Height="auto"
+                    VerticalAlignment="Top"
+                    MaxHeight="400"
                     Grid.RowSpan="5" />
                 <Button
                     Grid.Column="3"

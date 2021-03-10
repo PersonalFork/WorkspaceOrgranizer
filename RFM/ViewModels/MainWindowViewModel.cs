@@ -1,35 +1,26 @@
 ﻿using System.Threading.Tasks;
-using Prism.Commands;
+
 using Prism.Regions;
+
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Common.Extensions;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 
 namespace RFM.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private string _title = "Prism Application";
-        public string Title
+        public ILoader Loader { get; private set; }
+        public MainWindowViewModel(
+            IWorkflow workflow,
+            IRegionManager regionManager,
+            IDialogService dialogService,
+            ILoader loader) : base(workflow, regionManager, dialogService)
         {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
-
-        public DelegateCommand DialogCommand { get; private set; }
-
-        public MainWindowViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService) : base(workflow, regionManager, dialogService)
-        {
-            DialogCommand = new DelegateCommand(DoShowDialog);
+            Loader = loader;
             Activate();
-        }
-
-        private void DoShowDialog()
-        {
-            DialogService ds = new DialogService();
-            ConfirmDialogViewModel confirmDialogViewModel = new ConfirmDialogViewModel("Test", "Do you want to test ?", cancelText: "Cancel");
-            ds.ShowDialog(confirmDialogViewModel);
         }
 
         protected override void Activate()
@@ -40,6 +31,7 @@ namespace RFM.ViewModels
             }
             Task.Run(() =>
             {
+                Loader.ShowLoader("Please wait");
                 RegionManager?.BrowseRegionToPage(Regions.HeaderRegion, Pages.HomeHeader);
                 RegionManager?.BrowseRegionToPage(Regions.ContentRegion, Pages.Loading);
             });

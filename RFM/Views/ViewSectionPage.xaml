@@ -221,13 +221,33 @@
                     <TextBlock
                         Grid.Row="2"
                         Text="Location : "
-                        Margin="5" />
+                        Margin="5">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Note}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="1"
                         TextWrapping="Wrap"
                         Text="{Binding SelectedItem.Location}"
-                        Margin="5" />
+                        Margin="5">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Note}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
                     <TextBlock
                         Grid.Row="3"
@@ -313,10 +333,7 @@
                             Text="Application Options"
                             Margin="-5,5" />
                         <WrapPanel Orientation="Horizontal">
-                            <Button
-                                Content="Open"
-                                Margin="5"
-                                Command="{Binding OpenCommand}">
+                            <Button Margin="5" Command="{Binding OpenCommand}">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                         <Setter Property="Visibility" Value="Visible" />
@@ -327,6 +344,17 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#FF6200"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Open" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
                             </Button>
                             <Button Margin="5" Command="{Binding RunCommand}">
                                 <Button.Style>
@@ -416,6 +444,22 @@
                                             FontFamily="Segoe MDL2 Assets"
                                             Margin="-5,5,5,5" />
                                         <TextBlock Text=" Clone" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button
+                                Margin="5"
+                                ToolTip="Moves an item from one position to other position in the list."
+                                Command="{Binding ReorderCommand}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="#57F1AC"
+                                            Text=""
+                                            VerticalAlignment="Center"
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Margin="-5,5,5,5" />
+                                        <TextBlock Text=" Reorder" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button.Content>
                             </Button>

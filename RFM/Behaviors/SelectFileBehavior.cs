@@ -123,34 +123,42 @@ namespace RFM.Behaviors
 
         private void ShowFileBrowserDialog(object sender, RoutedEventArgs e)
         {
-            using (OpenFileDialog dialog = new OpenFileDialog())
+            try
             {
-                if (!string.IsNullOrEmpty(Filter))
+                using (OpenFileDialog dialog = new OpenFileDialog())
                 {
-                    dialog.Filter = Filter;
-                }
-                else
-                {
-                    dialog.Filter = null;
-                }
-                if (!string.IsNullOrEmpty(SelectedPath))
-                {
-                    string directory = Path.GetDirectoryName(SelectedPath);
-                    if (Directory.Exists(directory))
+                    if (!string.IsNullOrEmpty(Filter))
                     {
-                        dialog.InitialDirectory = directory;
+                        dialog.Filter = Filter;
+                    }
+                    else
+                    {
+                        dialog.Filter = null;
+                    }
+                    if (!string.IsNullOrEmpty(SelectedPath))
+                    {
+                        SelectedPath = SelectedPath.Replace("\"", string.Empty);
+                        string directory = Path.GetDirectoryName(SelectedPath);
+                        if (Directory.Exists(directory))
+                        {
+                            dialog.InitialDirectory = directory;
+                        }
+                    }
+                    DialogResult dialogResult = dialog.ShowDialog();
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        SelectedPath = dialog.FileName;
+                        OnSelectedCommand?.Execute(SelectedPath);
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
-                DialogResult dialogResult = dialog.ShowDialog();
-                if (dialogResult == DialogResult.OK)
-                {
-                    SelectedPath = dialog.FileName;
-                    OnSelectedCommand?.Execute(SelectedPath);
-                }
-                else
-                {
-                    return;
-                }
+            }
+            catch (System.Exception)
+            {
+                // TODO: Log Exception.
             }
         }
 

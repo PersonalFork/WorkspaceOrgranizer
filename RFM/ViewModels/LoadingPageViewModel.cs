@@ -4,6 +4,7 @@ using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 using RFM.Services;
 
@@ -11,10 +12,16 @@ namespace RFM.ViewModels
 {
     public class LoadingPageViewModel : ViewModelBase
     {
+        private readonly ILoader _loader;
         private IPersistenceService _persistanceService;
 
-        public LoadingPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
+        public LoadingPageViewModel(IWorkflow workflow,
+            IRegionManager regionManager,
+            IDialogService dialogService,
+            ILoader loader,
+            IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
+            _loader = loader;
             _persistanceService = persistanceService;
         }
 
@@ -30,6 +37,7 @@ namespace RFM.ViewModels
 
         protected override void Deactivate()
         {
+            _loader.HideLoader();
         }
     }
 }

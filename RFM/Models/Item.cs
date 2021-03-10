@@ -34,6 +34,13 @@ namespace RFM.Models
             set => SetProperty(ref _createdOn, value);
         }
 
+        private DateTime? _lastUpdated;
+        public DateTime? LastUpdated
+        {
+            get => _lastUpdated;
+            set => SetProperty(ref _lastUpdated, value);
+        }
+
         private bool _isSelected;
         public bool IsSelected
         {

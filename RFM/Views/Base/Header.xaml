@@ -14,14 +14,13 @@
                 RenderOptions.BitmapScalingMode="HighQuality"
                 Width="60"
                 Height="60"
-                Margin="10"
+                Margin="10 5"
                 Source="{DynamicResource Logo}" />
 
             <TextBlock
                 Text="Workspace Organizer"
                 VerticalAlignment="Center"
-                Style="{DynamicResource AppHeaderStyle}" 
-                />
+                Style="{DynamicResource AppHeaderStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>

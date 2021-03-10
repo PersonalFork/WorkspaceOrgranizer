@@ -39,6 +39,13 @@ namespace RFM.Models
             set => SetProperty(ref _description, value);
         }
 
+        private DateTime? _lastUpdated;
+        public DateTime? LastUpdated
+        {
+            get => _lastUpdated;
+            set => SetProperty(ref _lastUpdated, value);
+        }
+
         private DateTime _createdOn;
         public DateTime CreatedOn
         {

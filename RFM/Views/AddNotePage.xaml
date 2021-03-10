@@ -65,19 +65,32 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                <TextBox
-                    x:Name="txtContent"
+                <Grid
                     Margin="5"
+                    Background="White"
                     Grid.Column="1"
-                    AcceptsReturn="True"
-                    Grid.Row="2"
-                    TextWrapping="Wrap"
-                    FontFamily="Consolas"
-                    FontSize="16"
-                    Foreground="Black"
-                    Background="LightYellow"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    Grid.Row="2">
+                    <TextBox
+                        x:Name="txtContent"
+                        Padding="40,0,0,0"
+                        Grid.Column="1"
+                        AcceptsReturn="True"
+                        Grid.Row="2"
+                        TextWrapping="Wrap"
+                        FontFamily="Consolas"
+                        FontSize="15"
+                        Foreground="Black"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <TextBox.Background>
+                            <ImageBrush
+                                ImageSource="{DynamicResource NotepadBackground}"
+                                TileMode="Tile"
+                                Opacity="0.3"
+                                Viewport="1,0 1,0.0453" />
+                        </TextBox.Background>
+                    </TextBox>
+                </Grid>
                 <Button
                     Margin="5,0"
                     Grid.Column="1"

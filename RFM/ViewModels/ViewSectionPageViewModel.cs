@@ -1,11 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using log4net;
+
 using Prism.Commands;
 using Prism.Regions;
 
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Common.Extensions;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 using RFM.Models;
 using RFM.Services;
@@ -16,6 +21,7 @@ namespace RFM.ViewModels
     {
 
         private readonly IPersistenceService _persistanceService;
+        private readonly ILoader _loader;
         private static readonly ILog _logger = LogManager.GetLogger(typeof(ViewSectionPageViewModel));
 
         public DelegateCommand<Item> LaunchCommand { get; }
@@ -27,6 +33,7 @@ namespace RFM.ViewModels
         public DelegateCommand<Item> SelectItemCommand { get; private set; }
         public DelegateCommand DeleteItemCommand { get; private set; }
         public DelegateCommand<Item> EditApplicationCommand { get; private set; }
+        public DelegateCommand ReorderCommand { get; private set; }
         public DelegateCommand OpenCommand { get; }
         public DelegateCommand RunCommand { get; }
         public DelegateCommand CloneCommand { get; private set; }
@@ -39,9 +46,16 @@ namespace RFM.ViewModels
             set => SetProperty(ref _selectedApplication, value);
         }
 
-        public ViewSectionPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
+        public ViewSectionPageViewModel(
+            IWorkflow workflow,
+            IRegionManager regionManager,
+            IDialogService dialogService,
+            ILoader loader,
+            IPersistenceService persistanceService) : base(workflow, regionManager, dialogService)
         {
             _persistanceService = persistanceService;
+            _loader = loader;
+
             LaunchCommand = new DelegateCommand<Item>(DoLaunch);
             BackCommand = new DelegateCommand(DoGoBack);
             DeleteSectionCommand = new DelegateCommand(DoDeleteSection);
@@ -51,10 +65,57 @@ namespace RFM.ViewModels
             OpenInExplorerCommand = new DelegateCommand(DoBrowse);
             DeleteItemCommand = new DelegateCommand(DoDeleteItem);
             EditApplicationCommand = new DelegateCommand<Item>(DoEditApplication);
+            ReorderCommand = new DelegateCommand(DoReorder);
             OpenCommand = new DelegateCommand(DoOpenApplication);
             RunCommand = new DelegateCommand(DoRunApplication);
             CloseCommand = new DelegateCommand(DoClose);
             CloneCommand = new DelegateCommand(DoClone);
+        }
+
+        private void DoReorder()
+        {
+            if (SelectedItem == null)
+            {
+                return;
+            }
+            int index = Workflow.SelectedSection.Items.IndexOf(SelectedItem);
+            if (index == -1)
+            {
+                return;
+            }
+
+            IEnumerable<int> items = Enumerable.Range(1, Workflow.SelectedSection.Items.Count).Where(x => x != index + 1);
+            ReorderDialogViewModel vm = new ReorderDialogViewModel(items);
+            int? selectedIndex = DialogService.ShowDialog(vm);
+            if (selectedIndex != null)
+            {
+                try
+                {
+                    _loader.ShowLoader("Please wait while we reorder your items...");
+                    Workflow.SelectedSection.Items.Remove(SelectedItem);
+                    Workflow.SelectedSection.Items.Insert(selectedIndex.Value, SelectedItem);
+                    _persistanceService.SaveOrUpdateWorkflow(Workflow);
+                    Workflow.SelectedSection.LastUpdated = DateTime.Now;
+                    _loader.HideLoader();
+                    string message = $"The item {SelectedItem.Name} has been moved from Position : {index + 1} to Position : {selectedIndex + 1}";
+                    InfoDialogViewModel infoDialog = new InfoDialogViewModel("Success", message, Dialogs.Common.AlertType.Success);
+                    DialogService.ShowDialog(infoDialog);
+                    UnselectItem(SelectedItem);
+                    RaisePropertyChanged(nameof(Workflow.Sections));
+                }
+                catch (System.Exception)
+                {
+                    _loader.HideLoader();
+                    string title = "Error";
+                    string message = "Failed to reorder.";
+                    InfoDialogViewModel infoDialog = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Error);
+                    DialogService.ShowDialog(infoDialog, 3);
+                }
+                finally
+                {
+                    _loader.HideLoader();
+                }
+            }
         }
 
         private void DoClone()
@@ -66,23 +127,29 @@ namespace RFM.ViewModels
                 return;
             }
 
-            Item clone = SelectedItem.GetClone();
-            if (clone == null)
+            try
             {
-                return;
-            }
-            workspace.Items.Add(clone);
+                _loader.ShowLoader("Please wait while we are cloning your selected application..");
+                Item clone = SelectedItem.GetClone();
+                if (clone == null)
+                {
+                    return;
+                }
+                workspace.Items.Add(clone);
 
-            // Save configuration.
-            Task.Run(() =>
-            {
+                // Save configuration.
                 _persistanceService.SaveOrUpdateWorkflow(Workflow);
-            });
 
-            // Show clone success dialog.
-            string message = $"Item '{SelectedItem.Name}' has been cloned successfully to workspace '{workspace.Name}'";
-            InfoDialogViewModel infoDialog = new InfoDialogViewModel("Success", message, Dialogs.Common.AlertType.Success);
-            DialogService.ShowDialog(infoDialog, 3);
+                // Show clone success dialog.
+                _loader.HideLoader();
+                string message = $"Item '{SelectedItem.Name}' has been cloned successfully to workspace '{workspace.Name}'";
+                InfoDialogViewModel infoDialog = new InfoDialogViewModel("Success", message, Dialogs.Common.AlertType.Success);
+                DialogService.ShowDialog(infoDialog, 3);
+            }
+            finally
+            {
+                _loader.HideLoader();
+            }
         }
 
         private void DoClose()
@@ -123,19 +190,51 @@ namespace RFM.ViewModels
 
         private void DoOpenApplication()
         {
-            if (SelectedItem is NoteItem)
+            try
             {
-                Browse(Pages.AddNote, SelectedItem.ToNavigationParameter());
+                _loader.ShowLoader("Please wait while we open your selected item...");
+                if (SelectedItem is NoteItem)
+                {
+                    Browse(Pages.AddNote, SelectedItem.ToNavigationParameter());
+                }
+                else
+                {
+                    SelectedItem.Open();
+                }
             }
-            else
+            catch (System.Exception)
             {
-                SelectedItem.Open();
+                _loader.HideLoader();
+                string title = "Error";
+                string message = "Failed to open application.";
+                InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Error);
+                DialogService.ShowDialog(vm, 3);
+            }
+            finally
+            {
+                _loader.HideLoader();
             }
         }
 
         private void DoRunApplication()
         {
-            SelectedItem.ItemType.Run(SelectedItem, SelectedItem.StartupArgs);
+            try
+            {
+                _loader.ShowLoader("Please wait while we are running your selected item...");
+                SelectedItem.ItemType.Run(SelectedItem, SelectedItem.StartupArgs);
+            }
+            catch (System.Exception)
+            {
+                _loader.HideLoader();
+                string title = "Error";
+                string message = "Failed to open.";
+                InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Error);
+                DialogService.ShowDialog(vm, 3);
+            }
+            finally
+            {
+                _loader.HideLoader();
+            }
         }
 
         private void DoEditApplication(Item item)
@@ -160,23 +259,54 @@ namespace RFM.ViewModels
             bool? dialogResult = DialogService.ShowDialog(dialog);
             if (dialogResult == true)
             {
-                Workflow.SelectedSection.Items.Remove(SelectedItem);
-                SelectedItem = null;
-                Task.Run(() =>
+                try
                 {
+                    _loader.ShowLoader("Please wait while we are deleting your selected item...");
+
+                    Workflow.SelectedSection.Items.Remove(SelectedItem);
+                    Workflow.SelectedSection.LastUpdated = DateTime.Now;
+                    SelectedItem = null;
                     _persistanceService.SaveOrUpdateWorkflow(Workflow);
-                });
+                }
+                catch (System.Exception)
+                {
+                    _loader.HideLoader();
+                    string errorTitle = "Error";
+                    string message = "Failed to delete item.";
+                    InfoDialogViewModel vm = new InfoDialogViewModel(errorTitle, message, Dialogs.Common.AlertType.Error);
+                    DialogService.ShowDialog(vm, 3);
+                }
+                finally
+                {
+                    _loader.HideLoader();
+                }
             }
         }
 
         private void DoBrowse()
         {
-            if (SelectedItem == null || string.IsNullOrEmpty(SelectedItem.Location))
+            try
             {
-                return;
-            }
+                _loader.ShowLoader("Please wait while we open your item...");
+                if (SelectedItem == null || string.IsNullOrEmpty(SelectedItem.Location))
+                {
+                    return;
+                }
 
-            SelectedItem.Browse();
+                SelectedItem.Browse();
+            }
+            catch (System.Exception)
+            {
+                _loader.HideLoader();
+                string title = "Error";
+                string message = "Failed to open.";
+                InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Error);
+                DialogService.ShowDialog(vm, 3);
+            }
+            finally
+            {
+                _loader.HideLoader();
+            }
         }
 
         private void DoSelectItem(Item item)
@@ -244,12 +374,25 @@ namespace RFM.ViewModels
             bool? dialogResult = DialogService.ShowDialog(dialog);
             if (dialogResult == true)
             {
-                Workflow.Sections.Remove(Workflow.SelectedSection);
-                Task.Run(() =>
+                try
                 {
+                    _loader.ShowLoader("Please wait while we delete your selected workspace...");
+                    Workflow.Sections.Remove(Workflow.SelectedSection);
                     _persistanceService.SaveOrUpdateWorkflow(Workflow);
-                });
-                Browse(Pages.Dashboard);
+                    Browse(Pages.Dashboard);
+                }
+                catch (System.Exception)
+                {
+                    _loader.HideLoader();
+                    string header = "Error";
+                    string message = "Failed to delete.";
+                    InfoDialogViewModel vm = new InfoDialogViewModel(header, message, Dialogs.Common.AlertType.Error);
+                    DialogService.ShowDialog(vm, 3);
+                }
+                finally
+                {
+                    _loader.HideLoader();
+                }
             }
         }
 
@@ -260,7 +403,15 @@ namespace RFM.ViewModels
 
         protected override void Activate()
         {
-            SelectedItem = null;
+            IEnumerable<Item> selectedItems = Workflow?.SelectedSection?.Items?.Where(x => x?.IsSelected == true);
+            if (selectedItems != null && selectedItems.Count() > 0)
+            {
+                foreach (Item item in selectedItems)
+                {
+                    item.IsSelected = false;
+                }
+            }
+            UnselectItem(SelectedItem);
         }
 
         protected override void Deactivate()

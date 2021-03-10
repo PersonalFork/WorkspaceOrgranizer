@@ -68,7 +68,13 @@
     <Compile Include="Behaviors\SelectFileBehavior.cs" />
     <Compile Include="Common\Constants\ItemTypeConstants.cs" />
     <Compile Include="Common\Extensions\XmlExtensions.cs" />
+    <Compile Include="Common\ViewModels\LoadingPayloadViewModel.cs" />
+    <Compile Include="Controls\LoaderControl.xaml.cs">
+      <DependentUpon>LoaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Loader\Loader.cs" />
     <Compile Include="Converters\FileToImageIconConverter.cs" />
+    <Compile Include="Converters\ItemToIndexConveter.cs" />
     <Compile Include="Converters\ItemTypeToBooleanConverter.cs" />
     <Compile Include="Converters\MockConverter.cs" />
     <Compile Include="Dialogs\CloneDialog\CloneAppDialog.xaml.cs">
@@ -84,6 +90,10 @@
     <Compile Include="Dialogs\ItemType\ItemTypeDialog.xaml.cs">
       <DependentUpon>ItemTypeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Reorder\ReorderDialog.xaml.cs">
+      <DependentUpon>ReorderDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Reorder\ReorderDialogViewModel.cs" />
     <Compile Include="Models\ItemTypes\DirectoryItemType.cs" />
     <Compile Include="Models\ItemTypes\ExecutableItem.cs" />
     <Compile Include="Models\ItemTypes\FileItemType.cs" />
@@ -117,6 +127,10 @@
     <Compile Include="Views\ViewSectionPage.xaml.cs">
       <DependentUpon>ViewSectionPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\LoaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\Base\Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -134,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\ItemType\ItemTypeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\Reorder\ReorderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -311,6 +329,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Dark\sticky-note.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Notebook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Dependencies\FirstFloor.ModernUI.dll" />

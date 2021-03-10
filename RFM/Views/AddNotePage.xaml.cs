@@ -10,14 +10,6 @@ namespace RFM.Views
         public AddNotePage()
         {
             InitializeComponent();
-            if (string.IsNullOrEmpty(txtName.Text))
-            {
-                txtName.Focus();
-            }
-            else
-            {
-                txtContent.Focus();
-            }
         }
     }
 }
