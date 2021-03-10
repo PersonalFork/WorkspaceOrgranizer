@@ -95,5 +95,21 @@ namespace RFM.Models
         {
             Run(null);
         }
+
+        public virtual Item GetClone()
+        {
+            Item item = new Item()
+            {
+                CreatedOn = DateTime.Now,
+                Description = Description,
+                Icon = Icon,
+                ItemType = ItemType,
+                Location = Location,
+                Name = $"{Name}-Clone",
+                StartupArgs = StartupArgs
+            };
+
+            return item;
+        }
     }
 }

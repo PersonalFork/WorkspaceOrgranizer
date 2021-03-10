@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
+
 using Prism.Commands;
 using Prism.Regions;
+
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Common.Extensions;
@@ -52,6 +54,7 @@ namespace RFM.ViewModels
             BackCommand = new DelegateCommand(DoGoBack);
             CreateNoteCommand = new DelegateCommand(DoCreateNote, CanCreateNote)
                 .ObservesProperty(() => Name)
+                .ObservesProperty(() => Description)
                 .ObservesProperty(() => Content);
         }
 
@@ -123,6 +126,7 @@ namespace RFM.ViewModels
             {
                 Name = null;
                 Content = null;
+                Description = null;
                 UpdateMode = "Create";
             }
             base.OnNavigatedTo(navigationContext);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using log4net;
 using Prism.Commands;
 using Prism.Regions;
@@ -66,16 +65,13 @@ namespace RFM.ViewModels
             {
                 return;
             }
-            Item item = new Item()
+
+            Item clone = SelectedItem.GetClone();
+            if (clone == null)
             {
-                CreatedOn = DateTime.Now,
-                Description = SelectedItem.Description,
-                Name = $"{SelectedItem.Name}-Clone",
-                ItemType = SelectedItem.ItemType,
-                Location = SelectedItem.Location,
-                StartupArgs = SelectedItem.StartupArgs
-            };
-            workspace.Items.Add(item);
+                return;
+            }
+            workspace.Items.Add(clone);
 
             // Save configuration.
             Task.Run(() =>

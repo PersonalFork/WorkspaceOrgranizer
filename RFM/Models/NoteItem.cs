@@ -1,4 +1,6 @@
-﻿namespace RFM.Models
+﻿using System;
+
+namespace RFM.Models
 {
     public class NoteItem : Item
     {
@@ -12,6 +14,20 @@
         public NoteItem()
         {
             ItemType = new NoteItemType();
+        }
+
+        public override Item GetClone()
+        {
+            NoteItem item = new NoteItem()
+            {
+                CreatedOn = DateTime.Now,
+                Description = Description,
+                Icon = Icon,
+                Name = $"{Name}-Clone",
+                StartupArgs = StartupArgs,
+                Content = Content
+            };
+            return item;
         }
 
         public override void Browse()
