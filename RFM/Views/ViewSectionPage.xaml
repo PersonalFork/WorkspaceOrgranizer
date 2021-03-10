@@ -88,7 +88,7 @@
                         Text="Application List" />
 
                     <Grid Grid.Row="1">
-                        <ScrollViewer Margin="0 0 0 5">
+                        <ScrollViewer Margin="0,0,0,5">
                             <ItemsControl
                                 x:Name="itemsControlSections"
                                 ItemTemplate="{StaticResource ApplicationTemplate}"
@@ -282,29 +282,47 @@
                             <Button
                                 Content="Open"
                                 Margin="5"
-                                Command="{Binding OpenCommand}"
-                                Visibility="{Binding ElementName=grdIsExecutableHide, Path=Visibility}" />
+                                Command="{Binding OpenCommand}">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Executable}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button
                                 Content="Run"
                                 Margin="5"
-                                Command="{Binding RunCommand}"
-                                Visibility="{Binding ElementName=grdIsExecutable, Path=Visibility}" />
-                            <Button
-                                Content="Run as Admin"
-                                Margin="5"
-                                Visibility="Collapsed" />
+                                Command="{Binding RunCommand}">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Executable}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button
                                 Content="Open In Explorer"
                                 Margin="5"
                                 Command="{Binding OpenInExplorerCommand}">
                                 <Button.Style>
                                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Directory}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
+
+                                            <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.File}">
+                                                <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Hyperlink}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            <DataTrigger Binding="{Binding SelectedItem.ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Executable}">
+                                                <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

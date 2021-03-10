@@ -5,6 +5,8 @@ using Prism.Mvvm;
 
 namespace RFM.Models
 {
+    [XmlInclude(typeof(NoteItem))]
+    [XmlType("Item")]
     public class Item : BindableBase
     {
         #region Public Properties.

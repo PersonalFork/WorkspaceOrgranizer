@@ -51,6 +51,7 @@ namespace RFM
             containerRegistry.RegisterForNavigation<AddApplicationPage>(Pages.AddApplication);
             containerRegistry.RegisterForNavigation<EditApplicationPage>(Pages.EditApplication);
             containerRegistry.RegisterForNavigation<LoadingPage>(Pages.Loading);
+            containerRegistry.RegisterForNavigation<AddNotePage>(Pages.AddNote);
         }
     }
 }

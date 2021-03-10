@@ -112,6 +112,9 @@ namespace RFM.ViewModels
                     case ItemTypeConstants.File:
                         item.Run(item.StartupArgs);
                         break;
+                    case ItemTypeConstants.Note:
+                        Browse(Pages.AddNote, item.ToNavigationParameter());
+                        break;
                     default:
                         break;
                 }
@@ -124,7 +127,14 @@ namespace RFM.ViewModels
 
         private void DoOpenApplication()
         {
-            SelectedItem.Open();
+            if (SelectedItem is NoteItem)
+            {
+                Browse(Pages.AddNote, SelectedItem.ToNavigationParameter());
+            }
+            else
+            {
+                SelectedItem.Open();
+            }
         }
 
         private void DoRunApplication()
@@ -134,7 +144,14 @@ namespace RFM.ViewModels
 
         private void DoEditApplication(Item item)
         {
-            Browse(Pages.EditApplication, SelectedItem.ToNavigationParameter());
+            if (SelectedItem is NoteItem)
+            {
+                Browse(Pages.AddNote, SelectedItem.ToNavigationParameter());
+            }
+            else
+            {
+                Browse(Pages.EditApplication, SelectedItem.ToNavigationParameter());
+            }
         }
 
         private void DoDeleteItem()
@@ -162,6 +179,7 @@ namespace RFM.ViewModels
             {
                 return;
             }
+
             SelectedItem.Browse();
         }
 
@@ -205,7 +223,14 @@ namespace RFM.ViewModels
             {
                 return;
             }
-            Browse(Pages.AddApplication, selectedItemType.ToNavigationParameter());
+            if (selectedItemType is NoteItemType)
+            {
+                Browse(Pages.AddNote);
+            }
+            else
+            {
+                Browse(Pages.AddApplication, selectedItemType.ToNavigationParameter());
+            }
         }
 
         private void DoEditSection()

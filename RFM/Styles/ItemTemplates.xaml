@@ -52,6 +52,9 @@
                                                 <DataTrigger Binding="{Binding ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Hyperlink}">
                                                     <Setter Property="Source" Value="{DynamicResource HyperlinkAppTypeIcon}" />
                                                 </DataTrigger>
+                                                <DataTrigger Binding="{Binding ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.Note}">
+                                                    <Setter Property="Source" Value="{DynamicResource NoteAppTypeIcon}" />
+                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding ItemType.Type}" Value="{x:Static constants:ItemTypeConstants.File}">
                                                     <Setter Property="Source" Value="{Binding Location, Converter={StaticResource FileToImageIconConverter}}" />
                                                 </DataTrigger>
@@ -76,10 +79,10 @@
                                 Template="{DynamicResource ItemTypeTemplate}">
                                 <ContentControl.Style>
                                     <Style TargetType="ContentControl">
-                                        <Setter Property="Opacity" Value="0.3"/>
+                                        <Setter Property="Opacity" Value="0.3" />
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Opacity" Value="1"/>
+                                                <Setter Property="Opacity" Value="1" />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
@@ -135,4 +138,37 @@
         </Button>
 
     </DataTemplate>
+
+    <ControlTemplate x:Key="ItemTypeTemplate">
+        <Image
+            RenderOptions.BitmapScalingMode="HighQuality"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Stretch="Uniform"
+            ToolTip="{Binding Type}"
+            Margin="10">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Hyperlink}">
+                            <Setter Property="Source" Value="{DynamicResource HyperlinkAppTypeIcon}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Note}">
+                            <Setter Property="Source" Value="{DynamicResource NoteAppTypeIcon}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Executable}">
+                            <Setter Property="Source" Value="{DynamicResource ExecutableAppTypeIcon}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.File}">
+                            <Setter Property="Source" Value="{DynamicResource FileAppTypeIcon}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Directory}">
+                            <Setter Property="Source" Value="{DynamicResource DirectoryAppTypeIcon}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+    </ControlTemplate>
+
 </ResourceDictionary>

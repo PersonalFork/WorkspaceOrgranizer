@@ -1,0 +1,94 @@
+﻿<UserControl
+    x:Class="RFM.Views.AddNotePage"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Style="{DynamicResource SubHeaderStyle}" VerticalAlignment="Center">
+            <Run Text="{Binding UpdateMode, FallbackValue=Create}" />
+            <Run Text="Note" />
+        </TextBlock>
+
+        <Grid Grid.Row="1" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Title" />
+                    <TextBlock Text="*" Foreground="Red" />
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Row="1"
+                    Margin="5">
+                    <TextBlock Text="Description" />
+                    <TextBlock Text="*" Foreground="Red" />
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Row="2"
+                    Margin="5">
+                    <TextBlock Text="Content" />
+                </StackPanel>
+                <TextBox
+                    x:Name="txtNoteNate"
+                    Margin="5"
+                    MaxLength="25"
+                    Grid.Column="1"
+                    Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <TextBox
+                    Margin="5"
+                    MaxLength="25"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <TextBox
+                    Margin="5"
+                    Grid.Column="1"
+                    AcceptsReturn="True"
+                    Grid.Row="2"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                <Button
+                    Margin="5,0"
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Content="{Binding UpdateMode}"
+                    Command="{Binding CreateNoteCommand, FallbackValue=Create}"
+                    Width="auto"
+                    HorizontalAlignment="Right" />
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Button
+                Content="Back"
+                Command="{Binding BackCommand}"
+                Width="auto"
+                HorizontalAlignment="Left" />
+        </Grid>
+    </Grid>
+</UserControl>

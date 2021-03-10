@@ -10,5 +10,6 @@
         public const string AddApplication = "ADD_APPLICATION";
         public const string EditApplication = "EDIT_APPLICATION";
         public const string Loading = "LOADING";
+        public const string AddNote = "CREATE_NOTE";
     }
 }

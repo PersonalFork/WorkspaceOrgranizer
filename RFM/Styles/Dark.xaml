@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:constants="clr-namespace:RFM.Common.Constants">
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:Double x:Key="GlobalFontSize">20</sys:Double>
     <FontFamily x:Key="GlobalFontFamily">Segoe UI Light</FontFamily>
@@ -29,6 +28,7 @@
     <BitmapImage x:Key="ExecutableAppTypeIcon" UriSource="/Assets/Dark/imageres_5323.ico" />
     <BitmapImage x:Key="FileAppTypeIcon" UriSource="/Assets/Dark/imageres_117.ico" />
     <BitmapImage x:Key="DirectoryAppTypeIcon" UriSource="/Assets/Dark/imageres_4.ico" />
+    <BitmapImage x:Key="NoteAppTypeIcon" UriSource="/Assets/Dark/sticky-note.png" />
     <BitmapImage x:Key="RunIcon" UriSource="/Assets/Dark/Play_Circle.png" />
 
     <Style TargetType="TextBlock" x:Key="AppHeaderStyle">
@@ -45,34 +45,5 @@
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Normal" />
     </Style>
-
-    <ControlTemplate x:Key="ItemTypeTemplate">
-        <Image
-            RenderOptions.BitmapScalingMode="HighQuality"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Stretch"
-            Stretch="Uniform"
-            ToolTip="{Binding Type}"
-            Margin="10">
-            <Image.Style>
-                <Style TargetType="Image">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Hyperlink}">
-                            <Setter Property="Source" Value="{DynamicResource HyperlinkAppTypeIcon}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Executable}">
-                            <Setter Property="Source" Value="{DynamicResource ExecutableAppTypeIcon}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.File}">
-                            <Setter Property="Source" Value="{DynamicResource FileAppTypeIcon}" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Type}" Value="{x:Static constants:ItemTypeConstants.Directory}">
-                            <Setter Property="Source" Value="{DynamicResource DirectoryAppTypeIcon}" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Image.Style>
-        </Image>
-    </ControlTemplate>
 
 </ResourceDictionary>

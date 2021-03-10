@@ -6,5 +6,6 @@
         public const string Executable = "Executable";
         public const string File = "File";
         public const string Directory = "Directory";
+        public const string Note = "Note";
     }
 }

@@ -77,17 +77,20 @@ namespace RFM.Dialogs
         {
             ItemTypes = new ObservableCollection<ItemType>();
 
-            ItemType hyperlink = new HyperlinkItemType();
-            ItemTypes.Add(hyperlink);
-
-            ItemType executable = new ExecutableItemType();
-            ItemTypes.Add(executable);
-
             ItemType directory = new DirectoryItemType();
             ItemTypes.Add(directory);
 
             ItemType file = new FileItemType();
             ItemTypes.Add(file);
+
+            ItemType executable = new ExecutableItemType();
+            ItemTypes.Add(executable);
+
+            ItemType hyperlink = new HyperlinkItemType();
+            ItemTypes.Add(hyperlink);
+
+            ItemType stickyNote = new NoteItemType();
+            ItemTypes.Add(stickyNote);
         }
     }
 }

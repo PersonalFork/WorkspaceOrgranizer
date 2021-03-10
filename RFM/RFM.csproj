@@ -76,28 +76,34 @@
     </Compile>
     <Compile Include="Dialogs\CloneDialog\CloneAppDialogViewModel.cs" />
     <Compile Include="Dialogs\Common\AlertType.cs" />
-    <Compile Include="Dialogs\InfoDialog.xaml.cs">
+    <Compile Include="Dialogs\Info\InfoDialog.xaml.cs">
       <DependentUpon>InfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InfoDialogViewModel.cs" />
-    <Compile Include="Dialogs\ItemTypeDialogViewModel.cs" />
+    <Compile Include="Dialogs\Info\InfoDialogViewModel.cs" />
+    <Compile Include="Dialogs\ItemType\ItemTypeDialogViewModel.cs" />
     <Compile Include="Dialogs\ItemType\ItemTypeDialog.xaml.cs">
       <DependentUpon>ItemTypeDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\DirectoryItemType.cs" />
-    <Compile Include="Models\ExecutableItem.cs" />
-    <Compile Include="Models\FileItemType.cs" />
-    <Compile Include="Models\HyperlinkItemType.cs" />
+    <Compile Include="Models\ItemTypes\DirectoryItemType.cs" />
+    <Compile Include="Models\ItemTypes\ExecutableItem.cs" />
+    <Compile Include="Models\ItemTypes\FileItemType.cs" />
+    <Compile Include="Models\ItemTypes\HyperlinkItemType.cs" />
     <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\ItemType.cs" />
+    <Compile Include="Models\ItemTypes\ItemType.cs" />
+    <Compile Include="Models\ItemTypes\NoteItemType.cs" />
+    <Compile Include="Models\NoteItem.cs" />
     <Compile Include="Services\PersistenceService.cs" />
     <Compile Include="ViewModels\AddApplicationPageViewModel.cs" />
+    <Compile Include="ViewModels\AddNotePageViewModel.cs" />
     <Compile Include="ViewModels\EditApplicationPageViewModel.cs" />
     <Compile Include="ViewModels\EditSectionPageViewModel.cs" />
     <Compile Include="ViewModels\LoadingPageViewModel.cs" />
     <Compile Include="ViewModels\ViewSectionPageViewModel.cs" />
     <Compile Include="Views\AddApplicationPage.xaml.cs">
       <DependentUpon>AddApplicationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNotePage.xaml.cs">
+      <DependentUpon>AddNotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditApplicationPage.xaml.cs">
       <DependentUpon>EditApplicationPage.xaml</DependentUpon>
@@ -123,7 +129,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\InfoDialog.xaml">
+    <Page Include="Dialogs\Info\InfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,6 +158,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AddApplicationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNotePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -300,12 +310,14 @@
     <Content Include="Assets\Dark\Play_Circle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Dark\sticky-note.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Dependencies\FirstFloor.ModernUI.dll" />
     <Resource Include="imageres_1001.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Light\" />
-    <Folder Include="Dialogs\Info\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,6 +10,7 @@ namespace RFM.Models
     [XmlInclude(typeof(FileItemType))]
     [XmlInclude(typeof(DirectoryItemType))]
     [XmlInclude(typeof(HyperlinkItemType))]
+    [XmlInclude(typeof(NoteItemType))]
     [XmlType("ItemType")]
     public abstract class ItemType : BindableBase
     {
