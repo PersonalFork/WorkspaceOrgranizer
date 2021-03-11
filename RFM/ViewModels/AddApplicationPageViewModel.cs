@@ -57,7 +57,10 @@ namespace RFM.ViewModels
         {
             _persistanceService = persistanceService;
             BackCommand = new DelegateCommand(DoGoBack);
-            AddApplicationCommand = new DelegateCommand(DoAddApplication, CanAddApplication);
+            AddApplicationCommand = new DelegateCommand(DoAddApplication, CanAddApplication)
+                .ObservesProperty(() => Name)
+                .ObservesProperty(() => Description)
+                .ObservesProperty(() => Location);
         }
 
         private void DoAddApplication()
@@ -80,6 +83,11 @@ namespace RFM.ViewModels
 
         private bool CanAddApplication()
         {
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Location) || string.IsNullOrEmpty(Description))
+            {
+                return false;
+            }
+
             return true;
         }
 

@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿
 using Prism.Commands;
 using Prism.Regions;
+
 using RFM.Common;
 using RFM.Common.Constants;
 using RFM.Common.Extensions;
+using RFM.Controls.Loader;
 using RFM.Dialogs;
 using RFM.Models;
 using RFM.Services;
@@ -12,6 +14,7 @@ namespace RFM.ViewModels
 {
     public class EditApplicationPageViewModel : ViewModelBase
     {
+        private readonly ILoader _loader;
         #region Private Variable Declarations.
 
         private readonly IPersistenceService _persistenceService;
@@ -63,10 +66,21 @@ namespace RFM.ViewModels
 
         #region Constructors.
 
-        public EditApplicationPageViewModel(IWorkflow workflow, IRegionManager regionManager, IDialogService dialogService, IPersistenceService persistenceService) : base(workflow, regionManager, dialogService)
+        public EditApplicationPageViewModel(
+            IWorkflow workflow,
+            IRegionManager regionManager,
+            IDialogService dialogService,
+            ILoader loader,
+            IPersistenceService persistenceService) : base(workflow, regionManager, dialogService)
         {
+            _loader = loader;
             _persistenceService = persistenceService;
-            UpdateApplicationCommand = new DelegateCommand(DoUpdateApplication, CanUpdateApplication);
+            UpdateApplicationCommand = new DelegateCommand(DoUpdateApplication, CanUpdateApplication)
+                .ObservesProperty(() => Name)
+                .ObservesProperty(() => Description)
+                .ObservesProperty(() => Location)
+                .ObservesProperty(() => CommandLineArguments)
+                ;
             BackCommand = new DelegateCommand(DoGoBack);
         }
 
@@ -103,6 +117,16 @@ namespace RFM.ViewModels
 
         private void DoGoBack()
         {
+            if (CanUpdateApplication() == true)
+            {
+                string message = "Do you want to discard your changes and go back ?";
+                ConfirmDialogViewModel vm = new ConfirmDialogViewModel("Confirm", message, "Yes", "No");
+                bool? confirmYes = DialogService.ShowDialog(vm);
+                if (confirmYes != true)
+                {
+                    return;
+                }
+            }
             Browse(Pages.ViewSection);
         }
 
@@ -116,23 +140,50 @@ namespace RFM.ViewModels
             bool? dialogResult = DialogService.ShowDialog(dialog);
             if (dialogResult == true)
             {
+                SaveApplication();
+            }
+        }
+
+        private async void SaveApplication()
+        {
+            try
+            {
+                _loader.ShowLoader("Please wait while we update your application details...");
                 _item.Name = Name;
                 _item.Description = Description;
                 _item.Location = Location.Replace("'", string.Empty).Replace("\"", string.Empty);
                 _item.StartupArgs = CommandLineArguments;
 
-                Task.Run(() =>
-                {
-                    _persistenceService.SaveOrUpdateWorkflow(Workflow);
-                });
-
+                await _persistenceService.SaveOrUpdateWorkflow(Workflow);
                 Browse(Pages.ViewSection);
+            }
+            catch (System.Exception)
+            {
+                _loader.HideLoader();
+                string title = "Error";
+                string message = "Failed to update application.";
+                InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Error);
+                DialogService.ShowDialog(vm, 3);
+            }
+            finally
+            {
+                _loader.HideLoader();
             }
         }
 
         private bool CanUpdateApplication()
         {
-            return true;
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Location) || string.IsNullOrEmpty(Description))
+            {
+                return false;
+            }
+
+            bool isNameUpdated = !string.Equals(Name, _item.Name);
+            bool isDescriptionUpdated = !string.Equals(Description, _item.Description);
+            bool isLocationUpdated = !string.Equals(Location, _item.Location);
+            bool isCmdUpdated = !string.Equals(CommandLineArguments, _item.StartupArgs);
+
+            return isNameUpdated || isDescriptionUpdated || isLocationUpdated || isCmdUpdated;
         }
 
         #endregion

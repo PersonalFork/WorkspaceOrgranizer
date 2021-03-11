@@ -136,7 +136,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding Location}" Margin="5" />
+                    <TextBox Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
 
                     <Button
                         Grid.Column="1"
@@ -177,7 +177,8 @@
                     Text="Arguments : "
                     Margin="5" />
                 <TextBox
-                    Height="100"
+                    MinHeight="100"
+                    Height="auto"
                     TextWrapping="Wrap"
                     Visibility="{Binding ElementName=grdIsExecutable, Path=Visibility}"
                     Grid.Row="4"

@@ -21,6 +21,15 @@ namespace RFM.Converters
                     return DependencyProperty.UnsetValue;
                 }
                 string filePath = value.ToString();
+                if (Path.IsPathRooted(filePath) == false)
+                {
+                    string systemDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.System);
+                    filePath = Path.Combine(systemDirectoryPath, filePath);
+                    if (Path.HasExtension(filePath) == false)
+                    {
+                        filePath = $"{filePath}.exe";
+                    }
+                }
                 if (!File.Exists(filePath))
                 {
                     string defaultFilePath = "Assets/Images/DefaultApp.png";
