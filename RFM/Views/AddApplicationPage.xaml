@@ -136,9 +136,16 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+                    <TextBox
+                        TextWrapping="Wrap"
+                        Height="auto"
+                        MaxHeight="100"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5" />
 
                     <Button
+                        VerticalAlignment="Top"
                         Grid.Column="1"
                         Content="Browse"
                         Visibility="{Binding ElementName=tbLocation, Path=Visibility}"

@@ -1,9 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interactivity;
 
 using Prism.Commands;
+
+using RFM.Common.Extensions;
 
 using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
 
@@ -102,7 +105,12 @@ namespace RFM.Behaviors
             {
                 if (!string.IsNullOrEmpty(SelectedPath))
                 {
-                    string directory = Path.GetDirectoryName(SelectedPath);
+                    SelectedPath = SelectedPath.Replace("\"", string.Empty);
+                    string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    if (SelectedPath.IsValidPath())
+                    {
+                        directory = Path.GetDirectoryName(SelectedPath);
+                    }
                     if (Directory.Exists(directory))
                     {
                         dialog.SelectedPath = SelectedPath;
@@ -138,11 +146,12 @@ namespace RFM.Behaviors
                     if (!string.IsNullOrEmpty(SelectedPath))
                     {
                         SelectedPath = SelectedPath.Replace("\"", string.Empty);
-                        string directory = Path.GetDirectoryName(SelectedPath);
-                        if (Directory.Exists(directory))
+                        string directory = SelectedPath.SearchDirectory();
+                        if (!Directory.Exists(directory))
                         {
-                            dialog.InitialDirectory = directory;
+                            directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                         }
+                        dialog.InitialDirectory = directory;
                     }
                     DialogResult dialogResult = dialog.ShowDialog();
                     if (dialogResult == DialogResult.OK)

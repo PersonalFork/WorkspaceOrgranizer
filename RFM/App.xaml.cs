@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 
 using Prism.Ioc;
@@ -21,6 +24,11 @@ namespace RFM
     public partial class App
     {
         private UnityContainer _container;
+        private Mutex _appMutex;
+        private const string _appGuid = "607afds34s34231394-g42961-5f7a-8deb-rfm";
+
+        [DllImport("user32.dll")]
+        private static extern void SwitchToThisWindow(IntPtr hWnd, bool turnon);
 
         protected override Window CreateShell()
         {
@@ -29,6 +37,13 @@ namespace RFM
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            if (IsSingleInstanceRunning() == false)
+            {
+                Process process = Process.GetCurrentProcess();
+                process.Kill();
+                return;
+            }
+
             if (containerRegistry.GetContainer() is UnityContainer)
             {
                 _container = containerRegistry.GetContainer() as UnityContainer;
@@ -54,6 +69,22 @@ namespace RFM
             containerRegistry.RegisterForNavigation<EditApplicationPage>(Pages.EditApplication);
             containerRegistry.RegisterForNavigation<LoadingPage>(Pages.Loading);
             containerRegistry.RegisterForNavigation<AddNotePage>(Pages.AddNote);
+        }
+
+        private bool IsSingleInstanceRunning()
+        {
+            _appMutex = new Mutex(true, _appGuid, out bool isnewInstance);
+            if (!isnewInstance)
+            {
+                Process process = Process.GetCurrentProcess();
+                foreach (Process proc in Process.GetProcessesByName(process.ProcessName))
+                {
+                    //switch to process by name
+                    SwitchToThisWindow(proc.MainWindowHandle, true);
+                }
+                return false;
+            }
+            return true;
         }
     }
 }

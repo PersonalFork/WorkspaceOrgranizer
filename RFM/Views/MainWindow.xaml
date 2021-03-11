@@ -6,6 +6,7 @@
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:constants="clr-namespace:RFM.Common.Constants"
     xmlns:controls="clr-namespace:RFM.Controls"
+    ResizeMode="CanMinimize"
     WindowState="Maximized"
     FontSize="{DynamicResource GlobalFontSize}"
     FontFamily="{DynamicResource GlobalFontFamily}"

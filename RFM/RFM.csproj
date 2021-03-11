@@ -67,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\SelectFileBehavior.cs" />
     <Compile Include="Common\Constants\ItemTypeConstants.cs" />
+    <Compile Include="Common\Extensions\PathExtensions.cs" />
     <Compile Include="Common\Extensions\XmlExtensions.cs" />
     <Compile Include="Common\ViewModels\LoadingPayloadViewModel.cs" />
     <Compile Include="Controls\LoaderControl.xaml.cs">
@@ -329,6 +330,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Dark\sticky-note.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\imageres_68.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Notebook.png">

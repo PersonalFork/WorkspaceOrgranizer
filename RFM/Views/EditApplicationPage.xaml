@@ -150,6 +150,7 @@
                     <TextBox
                         Text="{Binding Location, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         TextWrapping="Wrap"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Height="auto"
                         MaxHeight="100"
                         Margin="5" />

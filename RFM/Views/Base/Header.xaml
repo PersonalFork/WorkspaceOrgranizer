@@ -10,8 +10,8 @@
     d:DesignWidth="800">
     <Grid VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="377*" />
-            <ColumnDefinition Width="23*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Image
