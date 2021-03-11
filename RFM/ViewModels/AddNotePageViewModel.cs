@@ -101,15 +101,16 @@ namespace RFM.ViewModels
                 };
                 Workflow.SelectedSection.Items.Add(item);
                 _noteItem = item;
-                CreateNoteCommand?.RaiseCanExecuteChanged();
+                InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Success);
+                DialogService.ShowDialog(vm, 3);
             }
+            CreateNoteCommand?.RaiseCanExecuteChanged();
             Task.Run(() =>
             {
                 _persistenceService.SaveOrUpdateWorkflow(Workflow);
             });
-            InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Success);
-            DialogService.ShowDialog(vm, 3);
-            Browse(Pages.ViewSection);
+
+            //Browse(Pages.ViewSection);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
