@@ -78,7 +78,7 @@
                         TextWrapping="Wrap"
                         FontFamily="Consolas"
                         AcceptsTab="True"
-                        FontSize="16"
+                        FontSize="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="Black"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -104,17 +104,33 @@
         </Grid>
 
         <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Set Font Size : " VerticalAlignment="Center" />
+                <ComboBox
+                    Margin="5"
+                    ItemsSource="{Binding AvailableFontSizes}"
+                    SelectedItem="{Binding FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    VerticalAlignment="Center">
+                    <ComboBox.InputBindings>
+                        <KeyBinding
+                            Key="S"
+                            Modifiers="Control"
+                            Command="{Binding CreateNoteCommand}" />
+                    </ComboBox.InputBindings>
+                </ComboBox>
+                <Button
+                    Margin="5,0"
+                    Content="{Binding UpdateMode}"
+                    Command="{Binding CreateNoteCommand, FallbackValue=Create}"
+                    Width="auto"
+                    HorizontalAlignment="Right" />
+            </StackPanel>
             <Button
                 Content="Back"
                 Command="{Binding BackCommand}"
                 Width="auto"
                 HorizontalAlignment="Left" />
-            <Button
-                Margin="5,0"
-                Content="{Binding UpdateMode}"
-                Command="{Binding CreateNoteCommand, FallbackValue=Create}"
-                Width="auto"
-                HorizontalAlignment="Right" />
+
         </Grid>
     </Grid>
 </UserControl>

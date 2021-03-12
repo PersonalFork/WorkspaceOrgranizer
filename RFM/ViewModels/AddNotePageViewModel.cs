@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 using Prism.Commands;
 using Prism.Regions;
@@ -38,11 +40,25 @@ namespace RFM.ViewModels
             set => SetProperty(ref _content, value);
         }
 
+        private double _fontSize;
+        public double FontSize
+        {
+            get => _fontSize;
+            set => SetProperty(ref _fontSize, value);
+        }
+
         private string _updateMode;
         public string UpdateMode
         {
             get => _updateMode;
             set => SetProperty(ref _updateMode, value);
+        }
+
+        private ObservableCollection<double> _availableFontSizes;
+        public ObservableCollection<double> AvailableFontSizes
+        {
+            get => _availableFontSizes;
+            set => SetProperty(ref _availableFontSizes, value);
         }
 
         public DelegateCommand CreateNoteCommand { get; private set; }
@@ -55,7 +71,9 @@ namespace RFM.ViewModels
             CreateNoteCommand = new DelegateCommand(DoCreateNote, CanCreateNote)
                 .ObservesProperty(() => Name)
                 .ObservesProperty(() => Description)
+                .ObservesProperty(() => FontSize)
                 .ObservesProperty(() => Content);
+            AvailableFontSizes = new ObservableCollection<double>(Enumerable.Range(10, 20).Select(x => (double)x));
         }
 
         private void DoGoBack()
@@ -74,6 +92,7 @@ namespace RFM.ViewModels
             {
                 return !string.Equals(_noteItem.Name, Name, System.StringComparison.OrdinalIgnoreCase)
                     || !string.Equals(_noteItem.Description, Description, System.StringComparison.OrdinalIgnoreCase)
+                    || _noteItem.FontSize != FontSize
                     || !string.Equals(_noteItem.Content, Content, System.StringComparison.OrdinalIgnoreCase);
             }
 
@@ -89,6 +108,7 @@ namespace RFM.ViewModels
                 _noteItem.Name = Name;
                 _noteItem.Description = Description;
                 _noteItem.Content = Content;
+                _noteItem.FontSize = FontSize;
             }
             else
             {
@@ -97,8 +117,10 @@ namespace RFM.ViewModels
                 {
                     Name = Name,
                     Description = Description,
-                    Content = Content
+                    Content = Content,
+                    FontSize = FontSize
                 };
+                UpdateMode = "Update";
                 Workflow.SelectedSection.Items.Add(item);
                 _noteItem = item;
                 InfoDialogViewModel vm = new InfoDialogViewModel(title, message, Dialogs.Common.AlertType.Success);
@@ -122,6 +144,7 @@ namespace RFM.ViewModels
                 Name = _noteItem.Name;
                 Content = _noteItem.Content;
                 Description = _noteItem.Description;
+                FontSize = _noteItem.FontSize;
             }
             else
             {
@@ -129,6 +152,7 @@ namespace RFM.ViewModels
                 Content = null;
                 Description = null;
                 UpdateMode = "Create";
+                FontSize = new NoteItem().FontSize;
             }
             base.OnNavigatedTo(navigationContext);
         }
