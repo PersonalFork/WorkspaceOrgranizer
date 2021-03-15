@@ -3,6 +3,8 @@ using System.Xml.Serialization;
 
 using Prism.Mvvm;
 
+using RFM.Common.Extensions;
+
 namespace RFM.Models
 {
     [XmlInclude(typeof(NoteItem))]
@@ -115,8 +117,17 @@ namespace RFM.Models
                 Name = $"{Name}-Clone",
                 StartupArgs = StartupArgs
             };
-
             return item;
+        }
+
+        public virtual bool Contains(string key)
+        {
+            key = Convert.ToString(key.ToUpper());
+
+            return ItemType?.Type?.Contains(key, StringComparison.OrdinalIgnoreCase) == true
+                || Description?.Contains(key, StringComparison.OrdinalIgnoreCase) == true
+                || Name?.Contains(key, StringComparison.OrdinalIgnoreCase) == true
+                || Location?.Contains(key, StringComparison.OrdinalIgnoreCase) == true;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using RFM.Common.Extensions;
 
 namespace RFM.Models
 {
@@ -45,6 +46,12 @@ namespace RFM.Models
         public override void Run(string startupArgs)
         {
             // No implementation.
+        }
+
+        public override bool Contains(string key)
+        {
+            key = Convert.ToString(key.ToUpper());
+            return base.Contains(key) || Content?.Contains(key, StringComparison.OrdinalIgnoreCase) == true;
         }
     }
 }

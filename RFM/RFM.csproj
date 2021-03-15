@@ -68,6 +68,7 @@
     <Compile Include="Behaviors\SelectFileBehavior.cs" />
     <Compile Include="Common\Constants\ItemTypeConstants.cs" />
     <Compile Include="Common\Extensions\PathExtensions.cs" />
+    <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Common\Extensions\XmlExtensions.cs" />
     <Compile Include="Common\ViewModels\LoadingPayloadViewModel.cs" />
     <Compile Include="Controls\LoaderControl.xaml.cs">
