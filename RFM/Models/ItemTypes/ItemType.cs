@@ -4,6 +4,8 @@ using System.Xml.Serialization;
 
 using Prism.Mvvm;
 
+using RFM.Common.Extensions;
+
 namespace RFM.Models
 {
     [XmlInclude(typeof(ExecutableItemType))]
@@ -68,17 +70,23 @@ namespace RFM.Models
 
         public virtual void Browse(Item application)
         {
-            string path = Path.GetDirectoryName(application.Location);
-            if (Directory.Exists(path))
+            try
             {
-                try
+                string fileName = application.Location;
+                string directoryName = Path.GetDirectoryName(fileName);
+                if (!Path.IsPathRooted(fileName))
                 {
-                    Process.Start("explorer.exe", path);
+                    directoryName = fileName.SearchDirectory();
                 }
-                catch
+
+                if (Directory.Exists(directoryName))
                 {
-                    //_logger.Warn("Could not open directory :" + ex.Message);
+                    Process.Start("explorer.exe", directoryName);
                 }
+            }
+            catch
+            {
+                throw;
             }
         }
         public virtual void Open(Item application)

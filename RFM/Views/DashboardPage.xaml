@@ -77,16 +77,16 @@
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
-                                Foreground="#8AFF8A"
-                                Text=""
-                                VerticalAlignment="Center"
-                                FontFamily="Segoe MDL2 Assets"
-                                Margin="-5,5,5,5" />
+                            Foreground="#8AFF8A"
+                            Text=""
+                            VerticalAlignment="Center"
+                            FontFamily="Segoe MDL2 Assets"
+                            Margin="-5,5,5,5" />
                         <TextBlock Text=" Create Workspace" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <ScrollViewer Grid.Row="1">
+            <ScrollViewer Grid.Row="1" Margin="0,0,-10,0">
                 <ItemsControl
                     x:Name="itemsControlSections"
                     Grid.Row="1"
@@ -101,7 +101,7 @@
                             <Button CommandParameter="{Binding .}" Command="{Binding ElementName=itemsControlSections, Path=DataContext.ViewSectionCommand}">
                                 <Button.Template>
                                     <ControlTemplate>
-                                        <Border BorderThickness="1" Margin="0,5,10,5">
+                                        <Border BorderThickness="1" Margin="0,5,5,5">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Cursor" Value="Hand" />
@@ -116,14 +116,15 @@
                                             </Border.Style>
                                             <Grid
                                                 Cursor="Hand"
-                                                Width="320"
+                                                Width="325"
                                                 Height="150"
                                                 Background="Black">
                                                 <TextBlock
-                                                    FontSize="24"
+                                                    FontSize="22"
                                                     Foreground="{Binding Color}"
                                                     VerticalAlignment="Center"
                                                     HorizontalAlignment="Center"
+                                                    TextAlignment="Center"
                                                     Text="{Binding Name}" />
                                                 <Border
                                                     Height="40"

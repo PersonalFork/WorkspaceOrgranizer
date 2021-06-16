@@ -87,12 +87,36 @@
                         Margin="0,10,0,0"
                         Text="Application List" />
 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock
+                            Text="Search : "
+                            VerticalAlignment="Center"
+                            Margin="5" />
+                        <Grid>
+                            <TextBox
+                                x:Name="txtFilter"
+                                Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Width="250"
+                                Padding="2,0,20,0"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="10,5"
+                                HorizontalAlignment="Right"
+                                Foreground="#FFFF80"
+                                Text=""
+                                IsHitTestVisible="False"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets">
+                            </TextBlock>
+                        </Grid>
+                    </StackPanel>
+
                     <Grid Grid.Row="1">
                         <ScrollViewer Margin="0,0,0,5">
                             <ItemsControl
                                 x:Name="itemsControlSections"
                                 ItemTemplate="{StaticResource ApplicationTemplate}"
-                                ItemsSource="{Binding Workflow.SelectedSection.Items}">
+                                ItemsSource="{Binding Applications}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel Orientation="Horizontal" />

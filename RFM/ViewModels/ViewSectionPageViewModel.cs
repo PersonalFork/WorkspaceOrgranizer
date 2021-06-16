@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-
+using System.Threading.Tasks;
+using System.Windows.Data;
 using log4net;
 
 using Prism.Commands;
@@ -19,10 +21,15 @@ namespace RFM.ViewModels
 {
     public class ViewSectionPageViewModel : ViewModelBase
     {
+        #region Private Variable Declarations.
 
         private readonly IPersistenceService _persistanceService;
         private readonly ILoader _loader;
         private static readonly ILog _logger = LogManager.GetLogger(typeof(ViewSectionPageViewModel));
+
+        #endregion
+
+        #region Public Properties.
 
         public DelegateCommand<Item> LaunchCommand { get; }
         public DelegateCommand AddApplicationCommand { get; private set; }
@@ -45,6 +52,31 @@ namespace RFM.ViewModels
             get => _selectedApplication;
             set => SetProperty(ref _selectedApplication, value);
         }
+
+        private ICollectionView _applications;
+        public ICollectionView Applications
+        {
+            get => _applications;
+            set => SetProperty(ref _applications, value);
+        }
+
+        private string _filterString = string.Empty;
+        public string FilterString
+        {
+            get => _filterString;
+            set
+            {
+                SetProperty(ref _filterString, value);
+                Task.Factory.StartNew(() =>
+                {
+                    RefreshCollection();
+                });
+            }
+        }
+
+        #endregion
+
+        #region Constructors.
 
         public ViewSectionPageViewModel(
             IWorkflow workflow,
@@ -70,6 +102,68 @@ namespace RFM.ViewModels
             RunCommand = new DelegateCommand(DoRunApplication);
             CloseCommand = new DelegateCommand(DoClose);
             CloneCommand = new DelegateCommand(DoClone);
+        }
+
+        #endregion
+
+        #region Public Method Declarations.
+
+        protected override void Activate()
+        {
+            _applications = CollectionViewSource.GetDefaultView(Workflow.SelectedSection.Items);
+            _applications.Filter = ApplicationFilter;
+            RaisePropertyChanged(nameof(Applications));
+        }
+
+        protected override void Deactivate()
+        {
+            _loader.ShowLoader("Please wait........");
+            IEnumerable<Item> selectedItems = Workflow?.SelectedSection?.Items?.Where(x => x?.IsSelected == true);
+            if (selectedItems != null && selectedItems.Count() > 0)
+            {
+                foreach (Item item in selectedItems)
+                {
+                    item.IsSelected = false;
+                }
+            }
+            UnselectItem(SelectedItem);
+            _applications.Filter = null;
+            FilterString = string.Empty;
+            _isNavigationBack = false;
+            _loader.HideLoader();
+        }
+
+        #endregion
+
+        #region Private Method Declarations.
+
+        private static readonly object _locker = new object();
+        private void RefreshCollection()
+        {
+            bool isRefreshing = false;
+            lock (_locker)
+            {
+                if (isRefreshing == true)
+                {
+                    return;
+                }
+                isRefreshing = true;
+            }
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                _applications.Refresh();
+                isRefreshing = false;
+            });
+        }
+
+        private bool ApplicationFilter(object obj)
+        {
+            if (obj is Item item)
+            {
+                bool found = item.Contains(FilterString);
+                return found;
+            }
+            return true;
         }
 
         private void DoReorder()
@@ -396,27 +490,13 @@ namespace RFM.ViewModels
             }
         }
 
+        private bool _isNavigationBack = false;
         private void DoGoBack()
         {
+            _isNavigationBack = true;
             Browse(Pages.Dashboard);
         }
 
-        protected override void Activate()
-        {
-            IEnumerable<Item> selectedItems = Workflow?.SelectedSection?.Items?.Where(x => x?.IsSelected == true);
-            if (selectedItems != null && selectedItems.Count() > 0)
-            {
-                foreach (Item item in selectedItems)
-                {
-                    item.IsSelected = false;
-                }
-            }
-            UnselectItem(SelectedItem);
-        }
-
-        protected override void Deactivate()
-        {
-            UnselectItem(SelectedItem);
-        }
+        #endregion
     }
 }

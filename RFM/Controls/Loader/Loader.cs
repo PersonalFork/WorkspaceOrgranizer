@@ -61,7 +61,7 @@ namespace RFM.Controls.Loader
 
         public void ShowLoader(string message)
         {
-            ShowLoader(_defaultTitle, message);
+            ShowLoader(message, _defaultTitle);
         }
 
         #endregion

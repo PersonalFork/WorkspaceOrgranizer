@@ -20,12 +20,9 @@
             <Run Text="Note" />
         </TextBlock>
 
-        <Grid Grid.Row="1" Grid.RowSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.RowSpan="1">
             <Grid Grid.Column="0">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -36,6 +33,7 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBlock Text="Title" />
                     <TextBlock Text="*" Foreground="Red" />
@@ -72,42 +70,67 @@
                     Grid.Row="2">
                     <TextBox
                         x:Name="txtContent"
-                        Padding="40,0,0,0"
+                        Padding="10,5"
                         Grid.Column="1"
+                        Grid.ColumnSpan="2"
                         AcceptsReturn="True"
                         Grid.Row="2"
                         TextWrapping="Wrap"
                         FontFamily="Consolas"
-                        FontSize="15"
+                        AcceptsTab="True"
+                        FontSize="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="Black"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <TextBox.Background>
+                            <SolidColorBrush Color="#FFFF85" />
+                        </TextBox.Background>
+                        <TextBox.InputBindings>
+                            <KeyBinding
+                                Key="S"
+                                Modifiers="Control"
+                                Command="{Binding CreateNoteCommand}" />
+                        </TextBox.InputBindings>
+                        <!--<TextBox.Background>
                             <ImageBrush
                                 ImageSource="{DynamicResource NotepadBackground}"
                                 TileMode="Tile"
                                 Opacity="0.3"
                                 Viewport="1,0 1,0.0453" />
-                        </TextBox.Background>
+                        </TextBox.Background>-->
                     </TextBox>
                 </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Set Font Size : " VerticalAlignment="Center" />
+                <ComboBox
+                    Margin="5"
+                    ItemsSource="{Binding AvailableFontSizes}"
+                    SelectedItem="{Binding FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    VerticalAlignment="Center">
+                    <ComboBox.InputBindings>
+                        <KeyBinding
+                            Key="S"
+                            Modifiers="Control"
+                            Command="{Binding CreateNoteCommand}" />
+                    </ComboBox.InputBindings>
+                </ComboBox>
                 <Button
                     Margin="5,0"
-                    Grid.Column="1"
-                    Grid.Row="3"
                     Content="{Binding UpdateMode}"
                     Command="{Binding CreateNoteCommand, FallbackValue=Create}"
                     Width="auto"
                     HorizontalAlignment="Right" />
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="3">
+            </StackPanel>
             <Button
                 Content="Back"
                 Command="{Binding BackCommand}"
                 Width="auto"
                 HorizontalAlignment="Left" />
+
         </Grid>
     </Grid>
 </UserControl>

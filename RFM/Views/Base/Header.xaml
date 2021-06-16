@@ -9,18 +9,89 @@
     d:DesignHeight="450"
     d:DesignWidth="800">
     <Grid VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Image
                 RenderOptions.BitmapScalingMode="HighQuality"
                 Width="60"
                 Height="60"
-                Margin="10 5"
+                Margin="10,5"
                 Source="{DynamicResource Logo}" />
 
             <TextBlock
                 Text="Workspace Organizer"
                 VerticalAlignment="Center"
                 Style="{DynamicResource AppHeaderStyle}" />
+        </StackPanel>
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Right"
+            Grid.ColumnSpan="2">
+            <Button
+                VerticalAlignment="Bottom"
+                Margin="10,5"
+                Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Foreground="#FFA88A"
+                                Text=""
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                Margin="-5,5,5,5" />
+                            <TextBlock Text=" Settings" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Foreground" Value="{DynamicResource DialogBorderColor}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <TextBlock
+                Text="|"
+                Margin="5,15,5,7"
+                VerticalAlignment="Bottom" />
+            <Button
+                Cursor="Hand"
+                BorderBrush="Transparent"
+                VerticalAlignment="Bottom"
+                Margin="10,5"
+                Background="Transparent">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Foreground="#B9FF8A"
+                                Text=""
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe MDL2 Assets"
+                                Margin="-5,5,5,5" />
+                            <TextBlock Text=" Help" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Foreground" Value="{DynamicResource DialogBorderColor}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -6,6 +6,7 @@
     xmlns:mui="http://firstfloorsoftware.com/ModernUI"
     xmlns:constants="clr-namespace:RFM.Common.Constants"
     xmlns:controls="clr-namespace:RFM.Controls"
+    ResizeMode="CanResizeWithGrip"
     WindowState="Maximized"
     FontSize="{DynamicResource GlobalFontSize}"
     FontFamily="{DynamicResource GlobalFontFamily}"
@@ -28,7 +29,7 @@
             Panel.ZIndex="1" />
         <ContentControl
             Grid.Row="1"
-            Margin="5,10"
+            Margin="5"
             prism:RegionManager.RegionName="{x:Static constants:Regions.ContentRegion}" />
         <ContentControl Grid.Row="2" prism:RegionManager.RegionName="{x:Static constants:Regions.FooterRegion}" />
         <controls:LoaderControl Panel.ZIndex="10" Grid.RowSpan="4" LoadingContext="{Binding Loader.LoadingPayload}" />

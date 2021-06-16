@@ -65,7 +65,7 @@ namespace RFM.Services
                 lock (_locker)
                 {
                     string serializedContent = ((Workflow)workflow).ToSerializedXml();
-                    if (!string.IsNullOrEmpty(serializedContent))
+                    if (string.IsNullOrEmpty(serializedContent))
                     {
                         return false;
                     }
